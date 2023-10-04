@@ -91,15 +91,13 @@ const defState = {
         opts: [
           {
             name: "Folder",
-          },
-          {
-            name: "Shortcut",
+            action: "CREATE_FOLDER",
+            payload: {},
           },
           {
             name: "Text Document",
-          },
-          {
-            name: "Compressed (zipped) Folder",
+            action: "CREATE_TEXT_DOC",
+            payload: {},
           },
         ],
       },

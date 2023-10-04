@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar } from "../../../utils/general";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { dispatchAction, handleFileOpen } from "../../../actions";
+import { Icon, Image, ToolBar } from "../../../utils/general";
 import "./assets/fileexpo.scss";
 
 const NavTitle = (props) => {
@@ -128,7 +128,7 @@ export const Explorer = () => {
             {curr.name}
           </div>
           <Icon className="dirchev" fafa="faChevronRight" width={8} />
-        </div>,
+        </div>
       );
 
       curr = curr.host;
@@ -140,7 +140,7 @@ export const Explorer = () => {
           This PC
         </div>
         <Icon className="dirchev" fafa="faChevronRight" width={8} />
-      </div>,
+      </div>
     );
 
     arr.push(
@@ -151,7 +151,7 @@ export const Explorer = () => {
           width={16}
         />
         <Icon className="dirchev" fafa="faChevronRight" width={8} />
-      </div>,
+      </div>
     );
 
     return (
@@ -351,16 +351,12 @@ const NavPane = ({}) => {
             pinned
           />
           <Dropdown title="Github" spid="%github%" notoggle />
-          <Dropdown icon="pics" title="Pictures" spid="%pictures%" notoggle />
         </Dropdown>
         <Dropdown icon="onedrive" title="OneDrive" spid="%onedrive%" />
         <Dropdown icon="thispc" title="This PC" action="" isDropped>
           <Dropdown icon="desk" title="Desktop" spid="%desktop%" />
           <Dropdown icon="docs" title="Documents" spid="%documents%" />
           <Dropdown icon="down" title="Downloads" spid="%downloads%" />
-          <Dropdown icon="music" title="Music" spid="%music%" />
-          <Dropdown icon="pics" title="Pictures" spid="%pictures%" />
-          <Dropdown icon="vid" title="Videos" spid="%videos%" />
           <Dropdown icon="disc" title="OS (C:)" spid="%cdrive%" />
           <Dropdown icon="disk" title="Blue (D:)" spid="%ddrive%" />
         </Dropdown>
@@ -376,23 +372,6 @@ const Ribbon = ({}) => {
         <div className="drdwcont flex">
           <Icon src="new" ui width={18} margin="0 6px" />
           <span>New</span>
-        </div>
-      </div>
-      <div className="ribsec">
-        <Icon src="cut" ui width={18} margin="0 6px" />
-        <Icon src="copy" ui width={18} margin="0 6px" />
-        <Icon src="paste" ui width={18} margin="0 6px" />
-        <Icon src="rename" ui width={18} margin="0 6px" />
-        <Icon src="share" ui width={18} margin="0 6px" />
-      </div>
-      <div className="ribsec">
-        <div className="drdwcont flex">
-          <Icon src="sort" ui width={18} margin="0 6px" />
-          <span>Sort</span>
-        </div>
-        <div className="drdwcont flex">
-          <Icon src="view" ui width={18} margin="0 6px" />
-          <span>View</span>
         </div>
       </div>
     </div>

@@ -1,16 +1,17 @@
 import { combineReducers, createStore } from "redux";
 
-import wallReducer from "./wallpaper";
-import taskReducer from "./taskbar";
-import deskReducer from "./desktop";
-import menuReducer from "./startmenu";
-import paneReducer from "./sidepane";
-import widReducer from "./widpane";
 import appReducer from "./apps";
-import menusReducer from "./menu";
-import globalReducer from "./globals";
-import settReducer from "./settings";
+import deskReducer from "./desktop";
 import fileReducer from "./files";
+import folderAndFileReducer from "./folderAndFile";
+import globalReducer from "./globals";
+import menusReducer from "./menu";
+import settReducer from "./settings";
+import paneReducer from "./sidepane";
+import menuReducer from "./startmenu";
+import taskReducer from "./taskbar";
+import wallReducer from "./wallpaper";
+import widReducer from "./widpane";
 
 const allReducers = combineReducers({
   wallpaper: wallReducer,
@@ -24,6 +25,7 @@ const allReducers = combineReducers({
   globals: globalReducer,
   setting: settReducer,
   files: fileReducer,
+  folderAndFiles: folderAndFileReducer,
 });
 
 var store = createStore(allReducers);
