@@ -28,6 +28,7 @@ const folderAndFileReducer = (state = defState, action) => {
       };
 
     case "CREATE_TEXT_DOC":
+      console.log("demoooo");
       const newTextDoc = {
         id: Date.now(),
         name: "New Text Document.txt",

@@ -97,8 +97,8 @@ const defState = {
           },
           {
             name: "Text Document",
-            action: "CREATE_TEXT_DOC",
-            payload: {},
+            action: "NOTEPAD",
+            payload: "full",
           },
         ],
       },

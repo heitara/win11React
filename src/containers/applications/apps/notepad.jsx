@@ -4,7 +4,7 @@ import { ToolBar } from "../../../utils/general";
 
 export const Notepad = () => {
   const wnapp = useSelector((state) => state.apps.notepad);
-
+  
   return (
     <div
       className="notepad floatTab dpShad"
