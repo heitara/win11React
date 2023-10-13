@@ -272,3 +272,8 @@ export const createFolder = () => {
 export const createTextDoc = () => {
   store.dispatch({ type: "CREATE_TEXT_DOC" });
 };
+
+export const getFileContent = (id) => {
+  const item = store.getState().files.data.find((file) => file.id === id);
+  return item ? item.content : null;
+};

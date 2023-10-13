@@ -9,6 +9,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Store",
     "Spotify",
   ],
+  //Desktop files and apps:
   desktop: (localStorage.getItem("desktop") &&
     JSON.parse(localStorage.getItem("desktop"))) || [
     "Recycle Bin",

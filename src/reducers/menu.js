@@ -85,6 +85,7 @@ const defState = {
         type: "hr",
       },
       {
+        //The file and folder creation:
         name: "New",
         icon: "New",
         type: "svg",

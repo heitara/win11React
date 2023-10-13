@@ -1,5 +1,5 @@
 const defState = {
-  items: [],
+  files: [],
 };
 
 const folderAndFileReducer = (state = defState, action) => {
@@ -13,6 +13,18 @@ const folderAndFileReducer = (state = defState, action) => {
       return {
         ...state,
         files: [...state.files, newFolder],
+      };
+
+    case "SAVE_TEXT_DOC":
+      const updatedFiles = state.files.map((file) => {
+        if (file.id === action.payload.id) {
+          return { ...file, content: action.payload.content };
+        }
+        return file;
+      });
+      return {
+        ...state,
+        files: updatedFiles,
       };
 
     case "CREATE_TEXT_DOC":
