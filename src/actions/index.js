@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from "../reducers";
-import { dfApps } from "../utils";
+import { allApps, dfApps } from "../utils";
 import { gene_name } from "../utils/apps";
 
 export const dispatchAction = (event) => {

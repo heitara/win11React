@@ -1,4 +1,65 @@
-export const defState = {
+import {
+  allApps,
+  desktopApps,
+  pinnedApps,
+  recentApps,
+  taskApps,
+} from "../utils";
+import { Bin } from "../utils/bin";
+import fdata from "./dir.json";
+
+//============================================
+// Initial state from desktop.js
+export const deskDefState = {
+  apps: desktopApps,
+  hide: false,
+  size: 1,
+  sort: "none",
+  abOpen: false,
+};
+
+//============================================
+// Initial state from apps.jsvar dev = "";
+
+var dev = "";
+if (import.meta.env.MODE == "development") {
+  dev = ""; // set the name (lowercase) of the app you are developing so that it will be opened on refresh
+}
+
+export const appDefState = {};
+for (let i = 0; i < allApps.length; i++) {
+  appDefState[allApps[i].icon] = allApps[i];
+  appDefState[allApps[i].icon].size = "full";
+  appDefState[allApps[i].icon].hide = true;
+  appDefState[allApps[i].icon].max = null;
+  appDefState[allApps[i].icon].z = 0;
+
+  if (allApps[i].icon == dev) {
+    appDefState[allApps[i].icon].size = "mini";
+    appDefState[allApps[i].icon].hide = false;
+    appDefState[allApps[i].icon].max = true;
+    appDefState[allApps[i].icon].z = 1;
+  }
+}
+appDefState.hz = 2;
+
+//============================================
+// Initial state from files.js
+export const filesDefState = {
+  cdir: "%user%",
+  hist: [],
+  hid: 0,
+  view: 1,
+};
+
+filesDefState.hist.push(filesDefState.cdir);
+filesDefState.data = new Bin();
+filesDefState.data.parse(fdata);
+
+//============================================
+// Initial state from menu.js
+
+export const MenuDefState = {
   hide: true,
   top: 80,
   left: 360,
@@ -246,26 +307,146 @@ export const defState = {
   },
 };
 
-const menusReducer = (state = defState, action) => {
-  var tmpState = {
-    ...state,
-  };
-  if (action.type == "MENUHIDE") {
-    tmpState.hide = true;
-  } else if (action.type == "MENUSHOW") {
-    tmpState.hide = false;
-    tmpState.top = (action.payload && action.payload.top) || 272;
-    tmpState.left = (action.payload && action.payload.left) || 430;
-    tmpState.opts = (action.payload && action.payload.menu) || "desk";
-    tmpState.attr = action.payload && action.payload.attr;
-    tmpState.dataset = action.payload && action.payload.dataset;
-  } else if (action.type == "MENUCHNG") {
-    tmpState = {
-      ...action.payload,
-    };
-  }
+//============================================
+// Initial state from settings.js
 
-  return tmpState;
+export const settingsDefState = {
+  system: {
+    power: {
+      saver: {
+        state: false,
+      },
+      battery: 100,
+    },
+    display: {
+      brightness: 100,
+      nightlight: {
+        state: false,
+      },
+      connect: false,
+    },
+  },
+  person: {
+    name: "Blue Edge",
+    theme: "light",
+    color: "blue",
+  },
+  devices: {
+    bluetooth: false,
+  },
+  network: {
+    wifi: {
+      state: true,
+    },
+    airplane: false,
+  },
+  privacy: {
+    location: {
+      state: false,
+    },
+  },
 };
 
-export default menusReducer;
+document.body.dataset.theme = settingsDefState.person.theme;
+
+export const changeVal = (obj, path, val = "togg") => {
+  var tmp = obj;
+  path = path.split(".");
+  for (var i = 0; i < path.length - 1; i++) {
+    tmp = tmp[path[i]];
+  }
+
+  if (val == "togg") {
+    tmp[path[path.length - 1]] = !tmp[path[path.length - 1]];
+  } else {
+    tmp[path[path.length - 1]] = val;
+  }
+
+  return obj;
+};
+
+//============================================
+// Initial state from sidepane.js
+
+export const sidepaneDefState = {
+  quicks: [
+    {
+      ui: true,
+      src: "wifi",
+      name: "WiFi",
+      state: "network.wifi.state",
+      action: "STNGTOGG",
+    },
+    {
+      ui: true,
+      src: "bluetooth",
+      name: "Bluetooth",
+      state: "devices.bluetooth",
+      action: "STNGTOGG",
+    },
+    {
+      ui: true,
+      src: "airplane",
+      name: "Flight Mode",
+      state: "network.airplane",
+      action: "STNGTOGG",
+    },
+    {
+      ui: true,
+      src: "saver",
+      name: "Battery Saver",
+      state: "system.power.saver.state",
+      action: "STNGTOGG",
+    },
+    {
+      ui: true,
+      src: "sun",
+      name: "Theme",
+      state: "person.theme",
+      action: "changeTheme",
+    },
+    {
+      ui: true,
+      src: "nightlight",
+      name: "Night Light",
+      state: "system.display.nightlight.state",
+      action: "STNGTOGG",
+    },
+  ],
+  hide: true,
+  banhide: true,
+  calhide: true,
+};
+
+//============================================
+//startmenu.js:
+
+export const startmenuDefState = {
+  pnApps: pinnedApps,
+  rcApps: recentApps,
+  hide: true,
+  menu: false,
+  showAll: false,
+  alpha: false,
+  pwctrl: false,
+  curAlpha: "A",
+  qksrch: [
+    ["faClock", 1, "Today in history"],
+    ["faChartLine", null, "Markets today"],
+    ["faFilm", null, "New movies"],
+    ["faNewspaper", 1, "Top news"],
+  ],
+};
+
+//============================================
+//taskbar.js:
+export const taskbarDefState = {
+  apps: taskApps,
+  prev: false,
+  prevApp: "",
+  prevPos: 0,
+  align: "center",
+  search: true,
+  widgets: true,
+  audio: 3,
+};
