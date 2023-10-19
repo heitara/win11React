@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
 
 export const StartMenu = () => {
-  const { align } = useSelector((state) => state.taskbar);
+  const { align } = useSelector((state) => state.combined);
   const start = useSelector((state) => {
     var arr = state.combined,
       ln = (6 - (arr.pnApps.length % 6)) % 6;

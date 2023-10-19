@@ -5,7 +5,7 @@ import { Icon, Image } from "../../utils/general";
 import "./back.scss";
 
 export const Background = () => {
-  const wall = useSelector((state) => state.wallpaper);
+  const wall = useSelector((state) => state.combined);
   const dispatch = useDispatch();
 
   return (
@@ -20,7 +20,7 @@ export const Background = () => {
 
 export const BootScreen = (props) => {
   const dispatch = useDispatch();
-  const wall = useSelector((state) => state.wallpaper);
+  const wall = useSelector((state) => state.combined);
   const [blackout, setBlackOut] = useState(false);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export const BootScreen = (props) => {
 };
 
 export const LockScreen = (props) => {
-  const wall = useSelector((state) => state.wallpaper);
+  const wall = useSelector((state) => state.combined);
   const [lock, setLock] = useState(false);
   const [unlocked, setUnLock] = useState(false);
   const [password, setPass] = useState("");

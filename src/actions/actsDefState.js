@@ -1,4 +1,6 @@
-import { pinnedApps, recentApps } from "../utils";
+import { pinnedApps, recentApps, taskApps } from "../utils";
+
+//startmenu.js:
 
 export const startmenuDefState = {
   pnApps: pinnedApps,
@@ -16,6 +18,8 @@ export const startmenuDefState = {
     ["faNewspaper", 1, "Top news"],
   ],
 };
+
+//sidepane.js:
 
 export const sidepaneDefState = {
   quicks: [
@@ -65,4 +69,55 @@ export const sidepaneDefState = {
   sidePaneHide: true,
   banhide: true,
   calhide: true,
+};
+
+//taskbar.js:
+
+export const taskbarDefState = {
+  apps: taskApps,
+  prev: false,
+  prevApp: "",
+  prevPos: 0,
+  align: "center",
+  search: true,
+  widgets: true,
+  audio: 3,
+};
+
+//wallpaper.js:
+
+var wps = localStorage.getItem("wps") || 0;
+var locked = localStorage.getItem("locked");
+
+export const walls = [
+  "default/img0.jpg",
+  "dark/img0.jpg",
+  "ThemeA/img0.jpg",
+  "ThemeA/img1.jpg",
+  "ThemeA/img2.jpg",
+  "ThemeA/img3.jpg",
+  "ThemeB/img0.jpg",
+  "ThemeB/img1.jpg",
+  "ThemeB/img2.jpg",
+  "ThemeB/img3.jpg",
+  "ThemeC/img0.jpg",
+  "ThemeC/img1.jpg",
+  "ThemeC/img2.jpg",
+  "ThemeC/img3.jpg",
+  "ThemeD/img0.jpg",
+  "ThemeD/img1.jpg",
+  "ThemeD/img2.jpg",
+  "ThemeD/img3.jpg",
+];
+
+const themes = ["default", "dark", "ThemeA", "ThemeB", "ThemeD", "ThemeC"];
+
+export const wallpaperDefState = {
+  themes: themes,
+  wps: wps,
+  src: walls[wps],
+  locked: !(locked == "false"),
+  booted: false || import.meta.env.MODE == "development",
+  act: "",
+  dir: 0,
 };

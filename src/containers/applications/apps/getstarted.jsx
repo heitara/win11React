@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon, ToolBar } from "../../../utils/general";
+import LangSwitch from "./assets/Langswitch";
 import countries from "./assets/countrylist.json";
 import "./assets/getstarted.scss";
-import { useState } from "react";
-import LangSwitch from "./assets/Langswitch";
-import { useTranslation } from "react-i18next";
 
 export const Getstarted = () => {
   const wnapp = useSelector((state) => state.apps.getstarted);
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.taskbar);
+  const tasks = useSelector((state) => state.combined);
   const { t } = useTranslation();
 
   const [pageNo, setPageNo] = useState(1);

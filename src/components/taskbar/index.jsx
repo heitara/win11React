@@ -6,12 +6,12 @@ import "./taskbar.scss";
 
 const Taskbar = () => {
   const tasks = useSelector((state) => {
-    return state.taskbar;
+    return state.combined;
   });
   const apps = useSelector((state) => {
     var tmpApps = { ...state.apps };
-    for (var i = 0; i < state.taskbar.apps.length; i++) {
-      tmpApps[state.taskbar.apps[i].icon].task = true;
+    for (var i = 0; i < state.combined.apps.length; i++) {
+      tmpApps[state.combined.apps[i].icon].task = true;
     }
     return tmpApps;
   });

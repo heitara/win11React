@@ -20,7 +20,7 @@ export * from "./apps/terminal";
 export * from "./apps/whiteboard";
 
 export const ScreenPreview = () => {
-  const tasks = useSelector((state) => state.taskbar);
+  const tasks = useSelector((state) => state.combined);
 
   return (
     <div className="prevCont" style={{ left: tasks.prevPos + "%" }}>

@@ -69,7 +69,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 
 function App() {
   const apps = useSelector((state) => state.apps);
-  const wall = useSelector((state) => state.wallpaper);
+  const wall = useSelector((state) => state.combined);
   const dispatch = useDispatch();
 
   const afterMath = (event) => {
@@ -88,7 +88,7 @@ function App() {
     } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
-      "--prefix",
+      "--prefix"
     );
 
     ess.forEach((item, i) => {
