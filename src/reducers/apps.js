@@ -24,8 +24,8 @@ for (let i = 0; i < allApps.length; i++) {
 defState.hz = 2;
 
 const appReducer = (state = defState, action) => {
-  console.log("State", state);
-  console.log("Action", action);
+  // console.log("State", state);
+  // console.log("Action", action);
   let tmpState = { ...state };
   let obj, keys;
 

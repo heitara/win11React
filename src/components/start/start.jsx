@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const start = useSelector((state) => {
-    var arr = state.startmenu,
+    var arr = state.combined,
       ln = (6 - (arr.pnApps.length % 6)) % 6;
 
     for (var i = 0; i < ln; i++) {
@@ -110,7 +110,7 @@ export const StartMenu = () => {
   return (
     <div
       className="startMenu dpShad"
-      data-hide={start.hide}
+      data-hide={start.startMenuHide}
       style={{ "--prefix": "START" }}
       data-align={align}
     >
@@ -210,7 +210,7 @@ export const StartMenu = () => {
                       <div className="ltName">
                         {i == 0 ? "#" : String.fromCharCode(i + 64)}
                       </div>
-                    </div>,
+                    </div>
                   );
 
                   ldx.forEach((app, j) => {
@@ -224,7 +224,7 @@ export const StartMenu = () => {
                       >
                         <Icon className="pnIcon" src={app.icon} width={24} />
                         <div className="appName">{app.name}</div>
-                      </div>,
+                      </div>
                     );
                   });
 

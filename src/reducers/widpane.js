@@ -51,7 +51,7 @@ const getRandom = (x = 10, rm = 0) => {
   return Math.floor(Math.random() * x);
 };
 
-const defState = {
+export const widpaneDefState = {
   data: {
     weather: {
       city: "New Delhi",
@@ -75,14 +75,14 @@ const defState = {
     stock: [
       [
         Number(
-          parseFloat(2300 + Math.random() * 200).toFixed(2),
+          parseFloat(2300 + Math.random() * 200).toFixed(2)
         ).toLocaleString(),
         parseFloat(Math.random() * 2).toFixed(2),
         Math.round(Math.random()),
       ],
       [
         Number(
-          parseFloat(600 + Math.random() * 200).toFixed(2),
+          parseFloat(600 + Math.random() * 200).toFixed(2)
         ).toLocaleString(),
         parseFloat(Math.random() * 2).toFixed(2),
         Math.round(Math.random()),
@@ -99,7 +99,7 @@ const defState = {
   hide: true,
 };
 
-const widReducer = (state = defState, action) => {
+const widReducer = (state = widpaneDefState, action) => {
   switch (action.type) {
     case "WIDGHIDE":
       return {

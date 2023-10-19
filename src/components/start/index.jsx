@@ -48,7 +48,7 @@ export const DesktopApp = () => {
 
   return (
     <div className="desktopCont">
-      {!deskApps.hide &&
+      {!deskApps.sidePaneHide &&
         deskApps.apps.map((app, i) => {
           return (
             // to allow it to be focusable (:focus)
@@ -71,12 +71,12 @@ export const DesktopApp = () => {
 };
 
 export const BandPane = () => {
-  const sidepane = useSelector((state) => state.sidepane);
+  const sidepane = useSelector((state) => state.combined);
 
   return (
     <div
       className="bandpane dpShad"
-      data-hide={sidepane.banhide}
+      data-hide={sidepane.sidePaneHide}
       style={{ "--prefix": "BAND" }}
     >
       <div className="bandContainer">
@@ -89,7 +89,7 @@ export const BandPane = () => {
 };
 
 export const SidePane = () => {
-  const sidepane = useSelector((state) => state.sidepane);
+  const sidepane = useSelector((state) => state.combined);
   const setting = useSelector((state) => state.setting);
   const tasks = useSelector((state) => state.taskbar);
   const [pnstates, setPnstate] = useState([]);
@@ -128,7 +128,7 @@ export const SidePane = () => {
   function sliderBackground(elem, e) {
     elem.style.setProperty(
       "--track-color",
-      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`,
+      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`
     );
   }
 
@@ -169,7 +169,7 @@ export const SidePane = () => {
   return (
     <div
       className="sidePane dpShad"
-      data-hide={sidepane.hide}
+      data-hide={sidepane.sidePaneHide}
       style={{ "--prefix": "PANE" }}
     >
       <div className="quickSettings p-5 pb-8">
@@ -230,7 +230,7 @@ export const SidePane = () => {
 };
 
 export const CalnWid = () => {
-  const sidepane = useSelector((state) => state.sidepane);
+  const sidepane = useSelector((state) => state.combined);
   const [loaded, setLoad] = useState(false);
 
   const [collapse, setCollapse] = useState("");
@@ -256,7 +256,7 @@ export const CalnWid = () => {
   return (
     <div
       className={`calnpane ${collapse} dpShad`}
-      data-hide={sidepane.calhide}
+      data-hide={sidepane.sidePaneHide}
       style={{ "--prefix": "CALN" }}
     >
       <div className="topBar pl-4 text-sm">
