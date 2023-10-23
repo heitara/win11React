@@ -1,4 +1,6 @@
 import {
+  desktopDefState,
+  menuDefState,
   sidepaneDefState,
   startmenuDefState,
   taskbarDefState,
@@ -11,6 +13,8 @@ const combined = {
   ...sidepaneDefState,
   ...taskbarDefState,
   ...wallpaperDefState,
+  ...desktopDefState,
+  ...menuDefState,
 };
 
 const combinedReducer = (state = combined, action) => {
@@ -226,6 +230,71 @@ const combinedReducer = (state = combined, action) => {
         ...state,
         wps: wps,
         src: src,
+      };
+
+    //desktop.js:
+
+    case "DESKREM":
+      var arr = state.dskApps.filter((x) => x.name != action.payload);
+
+      localStorage.setItem("desktop", JSON.stringify(arr.map((x) => x.name)));
+      return { ...state, dskApps: arr };
+    case "DESKADD":
+      var arr = [...state.dskApps];
+      arr.push(action.payload);
+
+      localStorage.setItem("desktop", JSON.stringify(arr.map((x) => x.name)));
+      return { ...state, dskApps: arr };
+    case "DESKHIDE":
+      return {
+        ...state,
+        dskHide: true,
+      };
+    case "DESKSHOW":
+      return {
+        ...state,
+        dskHide: false,
+      };
+    case "DESKTOGG":
+      return {
+        ...state,
+        dskHide: !state.dskHide,
+      };
+    case "DESKSIZE":
+      return {
+        ...state,
+        size: action.payload,
+      };
+    case "DESKSORT":
+      return {
+        ...state,
+        sort: action.payload || "none",
+      };
+    case "DESKABOUT":
+      return {
+        ...state,
+        abOpen: action.payload,
+      };
+
+    //menu.js:
+    case "MENUHIDE":
+      return {
+        ...state,
+        menuHide: true,
+      };
+    case "MENUSHOW":
+      return {
+        ...state,
+        menuHide: false,
+        top: (action.payload && action.payload.top) || 272,
+        left: (action.payload && action.payload.left) || 430,
+        opts: (action.payload && action.payload.menu) || "desk",
+        attr: action.payload && action.payload.attr,
+        dataset: action.payload && action.payload.dataset,
+      };
+    case "MENUCHNG":
+      return {
+        ...action.payload,
       };
     default:
       return state;

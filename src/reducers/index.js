@@ -15,7 +15,7 @@ const allReducers = combineReducers({
   combined: combinedReducer,
   widpane: widReducer,
   apps: appReducer,
-  menus: menusReducer,
+  // menus: menusReducer,
   globals: globalReducer,
   setting: settReducer,
   files: fileReducer,
