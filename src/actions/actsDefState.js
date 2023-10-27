@@ -123,7 +123,7 @@ export const wallpaperDefState = {
 };
 
 //desktop.js:
-export const desktopDefState = {
+export const deskDefState = {
   dskApps: desktopApps,
   dskHide: false,
   size: 1,
@@ -139,7 +139,7 @@ export const menuDefState = {
   opts: "desk",
   attr: null,
   dataset: null,
-  data: {
+  newData: {
     desk: {
       width: "310px",
       secwid: "200px",

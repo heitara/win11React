@@ -7,7 +7,8 @@ import * as Actions from "../../actions";
 
 export const ActMenu = () => {
   const menu = useSelector((state) => state.combined);
-  const menudata = menu.data[menu.opts];
+  const menudata = menu.newData[menu.opts];
+  // console.log("Menu: ", menu);
   const { abpos, isLeft } = useSelector((state) => {
     var acount = state.combined.menus[state.combined.opts].length;
     var tmpos = {

@@ -13,8 +13,8 @@ export * from "./widget";
 
 export const DesktopApp = () => {
   const deskApps = useSelector((state) => {
-    var arr = { ...state.desktop };
-    var tmpApps = [...arr.apps];
+    var arr = { ...state.combined };
+    var tmpApps = [...arr.dskApps];
 
     if (arr.sort == "name") {
       tmpApps.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
@@ -41,7 +41,8 @@ export const DesktopApp = () => {
       });
     }
 
-    arr.apps = tmpApps;
+    arr.dskApps = tmpApps;
+    console.log(arr);
     return arr;
   });
   const dispatch = useDispatch();

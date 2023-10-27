@@ -27,7 +27,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Store",
     "Unescape",
     "Buy me a coffee",
-    // "Notepad",
+    "Notepad",
     "Whiteboard",
     "Calculator",
     "Spotify",

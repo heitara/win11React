@@ -1,5 +1,3 @@
-import { desktopApps } from "../utils";
-
 const defState = {
   system: {
     power: {
@@ -73,6 +71,9 @@ const settReducer = (state = defState, action) => {
       break;
     case "SETTLOAD":
       tmpState = { ...action.payload };
+      break;
+    default:
+      return state;
   }
 
   if (changed) localStorage.setItem("setting", JSON.stringify(tmpState));

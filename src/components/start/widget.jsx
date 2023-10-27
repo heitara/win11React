@@ -5,7 +5,7 @@ import "./widget.scss";
 
 export const WidPane = () => {
   const dispatch = useDispatch();
-  const widget = useSelector((state) => state.widpane);
+  const widget = useSelector((state) => state.combined);
   const theme = useSelector((state) => state.setting.person.theme);
   const getRandom = (x = 0) => {
     if (theme == "light")

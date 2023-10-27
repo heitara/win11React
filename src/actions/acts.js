@@ -1,5 +1,5 @@
 import {
-  desktopDefState,
+  deskDefState,
   menuDefState,
   sidepaneDefState,
   startmenuDefState,
@@ -8,16 +8,20 @@ import {
   walls,
 } from "./actsDefState";
 
+import { widpaneDefState } from "../reducers/widpane";
+
 const combined = {
   ...startmenuDefState,
   ...sidepaneDefState,
   ...taskbarDefState,
   ...wallpaperDefState,
-  ...desktopDefState,
   ...menuDefState,
+  ...deskDefState,
+  ...widpaneDefState,
 };
 
 const combinedReducer = (state = combined, action) => {
+  console.log("Combined:", combined);
   switch (action.type) {
     case "PANETHEM":
       return {
@@ -235,12 +239,11 @@ const combinedReducer = (state = combined, action) => {
     //desktop.js:
 
     case "DESKREM":
-      var arr = state.dskApps.filter((x) => x.name != action.payload);
+      var arr = state.dskApps.filter((x) => x.name !== action.payload);
 
       localStorage.setItem("desktop", JSON.stringify(arr.map((x) => x.name)));
       return { ...state, dskApps: arr };
     case "DESKADD":
-      var arr = [...state.dskApps];
       arr.push(action.payload);
 
       localStorage.setItem("desktop", JSON.stringify(arr.map((x) => x.name)));
@@ -296,6 +299,20 @@ const combinedReducer = (state = combined, action) => {
       return {
         ...action.payload,
       };
+
+    //widpane.js:
+    case "WIDGHIDE":
+      return {
+        ...state,
+        hide: true,
+      };
+    case "WIDGTOGG":
+      return {
+        ...state,
+        hide: !state.hide,
+      };
+    case "WIDGREST":
+      return action.payload;
     default:
       return state;
   }
