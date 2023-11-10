@@ -22,7 +22,9 @@ const fileReducer = (state = defState, action) => {
       break;
     case "FILEPATH":
       var pathid = tmp.data.parsePath(action.payload);
-      if (pathid) tmp.cdir = pathid;
+      if (pathid) {
+        tmp.cdir = pathid;
+      }
       break;
     case "FILEBACK":
       var item = tmp.data.getId(tmp.cdir);
@@ -40,7 +42,9 @@ const fileReducer = (state = defState, action) => {
       break;
     case "FILENEXT":
       tmp.hid++;
-      if (tmp.hid > tmp.hist.length - 1) tmp.hid = tmp.hist.length - 1;
+      if (tmp.hid > tmp.hist.length - 1) {
+        tmp.hid = tmp.hist.length - 1;
+      }
       navHist = true;
       break;
     default:

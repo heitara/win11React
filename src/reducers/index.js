@@ -7,12 +7,10 @@ import fileReducer from "./files";
 import folderAndFileReducer from "./folderAndFile";
 import globalReducer from "./globals";
 import settReducer from "./settings";
-import widReducer from "./widpane";
 
 const allReducers = combineReducers({
   // desktop: deskReducer,
   combined: combinedReducer,
-  // widpane: widReducer,
   apps: appReducer,
   globals: globalReducer,
   setting: settReducer,
