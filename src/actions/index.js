@@ -152,7 +152,7 @@ export const installApp = (data) => {
   localStorage.setItem("installed", JSON.stringify(installed));
 
   var desk = localStorage.getItem("desktop");
-  if (!desk) desk = dfApps.combined;
+  if (!desk) desk = dfApps.desktop;
   else desk = JSON.parse(desk);
 
   desk.push(app.name);

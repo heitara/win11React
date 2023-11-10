@@ -304,12 +304,12 @@ const combinedReducer = (state = combined, action) => {
     case "WIDGHIDE":
       return {
         ...state,
-        hide: true,
+        widpaneHide: true,
       };
     case "WIDGTOGG":
       return {
         ...state,
-        hide: !state.hide,
+        widpaneHide: !state.widpaneHide,
       };
     case "WIDGREST":
       return action.payload;

@@ -96,7 +96,7 @@ export const widpaneDefState = {
     event: event,
     news: newsList,
   },
-  hide: true,
+  widpaneHide: true,
 };
 
 const widReducer = (state = widpaneDefState, action) => {
@@ -104,12 +104,12 @@ const widReducer = (state = widpaneDefState, action) => {
     case "WIDGHIDE":
       return {
         ...state,
-        hide: true,
+        widpaneHide: true,
       };
     case "WIDGTOGG":
       return {
         ...state,
-        hide: !state.hide,
+        widpaneHide: !state.widpaneHide,
       };
     case "WIDGREST":
       return action.payload;

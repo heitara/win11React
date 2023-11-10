@@ -13,6 +13,10 @@ export * from "./widget";
 
 export const DesktopApp = () => {
   const deskApps = useSelector((state) => {
+    //if we change the arr to be ...state.desktop and change the tempState to ...arr.apps and add the desktop reducer
+    //the icons on the desktop will be visible!
+    //the problem is that when the web applciation is initialised, it sets the insdead of dskHide, sets it to just hide
+    //that can bee seen in the apps.js reducer
     var arr = { ...state.combined };
     var tmpApps = [...arr.dskApps];
 

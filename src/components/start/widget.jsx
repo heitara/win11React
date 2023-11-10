@@ -17,10 +17,10 @@ export const WidPane = () => {
   return (
     <div
       className="widPaneCont"
-      data-hide={widget.hide}
+      data-hide={widget.widpaneHide}
       style={{ "--prefix": "WIDG" }}
     >
-      <LazyComponent show={!widget.hide}>
+      <LazyComponent show={!widget.widpaneHide}>
         <div className="WidPane win11Scroll">
           <div className="widtop">
             <Icon fafa="faEllipsisH" width={12} />
