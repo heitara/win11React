@@ -39,34 +39,39 @@ export const WidPane = () => {
                 </div>
                 <div className="wthcity">
                   <Icon fafa="faMapMarkerAlt" width={8} />
-                  {widget.data.weather.city}, {widget.data.weather.country}
+                  {widget.widpaneData.weather.city},{" "}
+                  {widget.widpaneData.weather.country}
                 </div>
                 <div className="wthInfo">
                   <div className="wthTemp">
                     <Icon
-                      src={`https://www.metaweather.com/static/img/weather/png/64/${widget.data.weather.icon}.png`}
+                      src={`https://www.metaweather.com/static/img/weather/png/64/${widget.widpaneData.weather.icon}.png`}
                       ext
                       width={32}
                     />
-                    <div className="wthdeg">{widget.data.weather.temp}</div>
+                    <div className="wthdeg">
+                      {widget.widpaneData.weather.temp}
+                    </div>
                     <div className="wthunit">ºC</div>
                   </div>
                   <div className="moreWinfo">
-                    <div className="wcontext">{widget.data.weather.wstate}</div>
+                    <div className="wcontext">
+                      {widget.widpaneData.weather.wstate}
+                    </div>
                     <div className="rainProb">
                       <div className="chanceOfRain">
                         <Icon fafa="faTint" width={10} />
-                        {widget.data.weather.rain}%
+                        {widget.widpaneData.weather.rain}%
                       </div>
                       <div className="chanceOfRain">
                         <Icon fafa="faWind" width={10} />
-                        {widget.data.weather.wind}
+                        {widget.widpaneData.weather.wind}
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="weekWthCont">
-                  {widget.data.weather.days.map((item, i) => {
+                  {widget.widpaneData.weather.days.map((item, i) => {
                     return (
                       <div key={i} className="weekDay">
                         <div>{i == 0 ? "Today" : item.day}</div>
@@ -92,13 +97,13 @@ export const WidPane = () => {
                       <div className="stName">GOOGL</div>
                     </div>
                     <div className="stockValue">
-                      <div>{widget.data.stock[0][0]}</div>
+                      <div>{widget.widpaneData.stock[0][0]}</div>
                       <div
                         className="stRes"
-                        data-pos={widget.data.stock[0][2] == 1}
+                        data-pos={widget.widpaneData.stock[0][2] == 1}
                       >
-                        {widget.data.stock[0][2] ? "+" : "-"}
-                        {widget.data.stock[0][1]}%
+                        {widget.widpaneData.stock[0][2] ? "+" : "-"}
+                        {widget.widpaneData.stock[0][1]}%
                       </div>
                     </div>
                   </div>
@@ -108,13 +113,13 @@ export const WidPane = () => {
                       <div className="stName">TSLA</div>
                     </div>
                     <div className="stockValue">
-                      <div>{widget.data.stock[1][0]}</div>
+                      <div>{widget.widpaneData.stock[1][0]}</div>
                       <div
                         className="stRes"
-                        data-pos={widget.data.stock[1][2] == 1}
+                        data-pos={widget.widpaneData.stock[1][2] == 1}
                       >
-                        {widget.data.stock[1][2] ? "+" : "-"}
-                        {widget.data.stock[1][1]}%
+                        {widget.widpaneData.stock[1][2] ? "+" : "-"}
+                        {widget.widpaneData.stock[1][1]}%
                       </div>
                     </div>
                   </div>
@@ -123,12 +128,12 @@ export const WidPane = () => {
                   className="short1 ltShad"
                   style={{
                     "--afterBack": `url(${
-                      widget.data.event.pages[0].thumbnail &&
-                      widget.data.event.pages[0].thumbnail.source
+                      widget.widpaneData.event.pages[0].thumbnail &&
+                      widget.widpaneData.event.pages[0].thumbnail.source
                     })`,
                     backgroundImage: `url(${
-                      widget.data.event.pages[0].thumbnail &&
-                      widget.data.event.pages[0].thumbnail.source
+                      widget.widpaneData.event.pages[0].thumbnail &&
+                      widget.widpaneData.event.pages[0].thumbnail.source
                     })`,
                   }}
                 >
@@ -137,13 +142,16 @@ export const WidPane = () => {
                       <Icon fafa="faLandmark" width={8} />
                       &nbsp;ON THIS DAY
                     </div>
-                    <div>{widget.data.date}</div>
+                    <div>{widget.widpaneData.date}</div>
                   </div>
                   <div className="infotextCont">
-                    <div className="dayInfo">{widget.data.event.text}</div>
+                    <div className="dayInfo">
+                      {widget.widpaneData.event.text}
+                    </div>
                     <a
                       href={
-                        widget.data.event.pages[0].content_urls.desktop.page
+                        widget.widpaneData.event.pages[0].content_urls.desktop
+                          .page
                       }
                       rel="noopener noreferrer"
                       target="_blank"
@@ -159,19 +167,21 @@ export const WidPane = () => {
               <div className="topStories ltShad">
                 <div className="topNewsText">TOP STORIES</div>
                 <div className="topNewsCont">
-                  {[...widget.data.news].splice(0, 4).map((article, i) => {
-                    return (
-                      <div className="tpNews" key={i}>
-                        <div className="tpSource">{article.source.name}</div>
-                        <div className="tpArticle">{article.title}</div>
-                      </div>
-                    );
-                  })}
+                  {[...widget.widpaneData.news]
+                    .splice(0, 4)
+                    .map((article, i) => {
+                      return (
+                        <div className="tpNews" key={i}>
+                          <div className="tpSource">{article.source.name}</div>
+                          <div className="tpArticle">{article.title}</div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
               <div className="allNewsCont">
-                {[...widget.data.news]
-                  .splice(4, widget.data.news.length)
+                {[...widget.widpaneData.news]
+                  .splice(4, widget.widpaneData.news.length)
                   .map((article, i) => {
                     return (
                       <a

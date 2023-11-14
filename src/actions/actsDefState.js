@@ -1,5 +1,8 @@
 import { desktopApps, pinnedApps, recentApps, taskApps } from "../utils";
 
+import { Bin } from "../utils/bin";
+import fdata from "./dir.json";
+
 //startmenu.js:
 
 export const startmenuDefState = {
@@ -379,3 +382,56 @@ export const menuDefState = {
     ],
   },
 };
+
+//files:
+// export const filesDefState = {
+//   data: {
+//     cdir: "",
+//     hist: [],
+//     hid: 0,
+//     view: 1,
+//     bin: new Bin(),
+//   },
+// };
+
+// filesDefState.data.hist.push(filesDefState.data.cdir);
+// filesDefState.data.bin.parse(fdata);
+
+// export const filesDefState = {
+//   data: {
+//     cdir: "%user%",
+//     hist: ["%user%"], // Initialize with the default cdir in history
+//     hid: 0,
+//     view: 1,
+//     bin: new Bin()
+//   }
+// };
+
+// filesDefState.data.bin.parse(fdata);
+
+// const binInstance = new Bin();
+// binInstance.parse(fdata);
+
+// const userSpecialId = binInstance.special["%user%"];
+
+// export const filesDefState = {
+//   data: {
+//     cdir: userSpecialId,
+//     hist: ["%user%", userSpecialId],
+//     hid: 1,
+//     view: 1,
+//     bin: binInstance,
+//     cpath: "C:\\Users\\Blue",
+//   },
+// };
+
+export const filesDefState = {
+  cdir: "%user%",
+  hist: [],
+  hid: 0,
+  view: 1,
+};
+
+filesDefState.hist.push(filesDefState.cdir);
+filesDefState.fdata = new Bin();
+filesDefState.fdata.parse(fdata);

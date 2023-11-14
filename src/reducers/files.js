@@ -1,18 +1,18 @@
 import { Bin } from "../utils/bin";
 import fdata from "./dir.json";
 
-const defState = {
+export const filesDefState = {
   cdir: "%user%",
   hist: [],
   hid: 0,
   view: 1,
 };
 
-defState.hist.push(defState.cdir);
-defState.data = new Bin();
-defState.data.parse(fdata);
+filesDefState.hist.push(filesDefState.cdir);
+filesDefState.testData = new Bin();
+filesDefState.testData.parse(fdata);
 
-const fileReducer = (state = defState, action) => {
+const fileReducer = (state = filesDefState, action) => {
   var tmp = { ...state };
   var navHist = false;
 

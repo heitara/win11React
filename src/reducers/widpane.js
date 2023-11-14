@@ -52,7 +52,7 @@ const getRandom = (x = 10, rm = 0) => {
 };
 
 export const widpaneDefState = {
-  data: {
+  widpaneData: {
     weather: {
       city: "New Delhi",
       country: "India",

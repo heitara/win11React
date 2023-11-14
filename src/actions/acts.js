@@ -1,5 +1,6 @@
 import {
   deskDefState,
+  filesDefState,
   menuDefState,
   sidepaneDefState,
   startmenuDefState,
@@ -18,10 +19,14 @@ const combined = {
   ...menuDefState,
   ...deskDefState,
   ...widpaneDefState,
+  data: { ...filesDefState },
 };
 
 const combinedReducer = (state = combined, action) => {
   console.log("Combined:", combined);
+  console.log("action:", action);
+  var tmp = { ...state };
+  var navHist = false;
   switch (action.type) {
     case "PANETHEM":
       return {
@@ -313,9 +318,60 @@ const combinedReducer = (state = combined, action) => {
       };
     case "WIDGREST":
       return action.payload;
+
+    //files:
+    case "FILEDIR":
+      tmp.data.cdir = action.payload;
+      break;
+    case "FILEPATH":
+      var pathid = tmp.data.fdata.parsePath(action.payload);
+      if (pathid) {
+        tmp.data.cdir = pathid;
+      }
+      break;
+    case "FILEBACK":
+      var item = tmp.data.fdata.getId(tmp.data.cdir);
+      if (item && item.host) {
+        tmp.data.cdir = item.host.id;
+      }
+      break;
+    case "FILEVIEW":
+      tmp.data.view = action.payload;
+      break;
+    case "FILEPREV":
+      tmp.data.hid--;
+      if (tmp.data.hid < 0) tmp.data.hid = 0;
+      navHist = true;
+      break;
+    case "FILENEXT":
+      tmp.data.hid++;
+      if (tmp.data.hid > tmp.data.hist.length - 1) {
+        tmp.data.hid = tmp.data.hist.length - 1;
+      }
+      navHist = true;
+      break;
     default:
-      return state;
+      if (!navHist && tmp.data.cdir !== tmp.data.hist[tmp.data.hid]) {
+        tmp.data.hist.splice(tmp.data.hid + 1);
+        tmp.data.hist.push(tmp.data.cdir);
+        tmp.data.hid = tmp.data.hist.length - 1;
+      }
+
+      tmp.data.cpath = tmp.data.fdata.getPath(tmp.data.cdir);
+
+      if (tmp.data.cdir.includes("%")) {
+        if (
+          tmp.data.fdata.special &&
+          tmp.data.fdata.special[tmp.data.cdir] != null
+        ) {
+          tmp.data.cdir = tmp.data.fdata.special[tmp.data.cdir];
+        }
+      }
+
+      return tmp;
   }
+
+  return tmp;
 };
 
 export default combinedReducer;

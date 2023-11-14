@@ -25,8 +25,8 @@ const NavTitle = (props) => {
 };
 
 const FolderDrop = ({ dir }) => {
-  const files = useSelector((state) => state.files);
-  const folder = files.data.getId(dir);
+  const files = useSelector((state) => state.combined);
+  const folder = files.data.tree[1].getId(dir);
 
   return (
     <>
@@ -50,7 +50,7 @@ const FolderDrop = ({ dir }) => {
 
 const Dropdown = (props) => {
   const [open, setOpen] = useState(props.isDropped != null);
-  const special = useSelector((state) => state.files.data.special);
+  const special = useSelector((state) => state.combined.data.fdata.special);
   const [fid, setFID] = useState(() => {
     if (props.spid) return special[props.spid];
     else return props.dir;
@@ -95,9 +95,13 @@ const Dropdown = (props) => {
 export const Explorer = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.explorer);
-  const files = useSelector((state) => state.files);
-  const fdata = files.data.getId(files.cdir);
-  const [cpath, setPath] = useState(files.cpath);
+  const files = useSelector((state) => state.combined);
+  // console.log("FDATA:", files.data.fdata);
+  // const userSpecialId = files.data.fdata.special["%user%"];
+
+  const fdata = files.data.fdata.getId(files.data.cdir);
+  console.log("FDATA:", fdata);
+  const [cpath, setPath] = useState(files.data.cpath);
   const [searchtxt, setShText] = useState("");
   const dispatch = useDispatch();
 
@@ -190,7 +194,7 @@ export const Explorer = () => {
           <div className="sec1">
             <Icon
               className={
-                "navIcon hvtheme" + (files.hid == 0 ? " disableIt" : "")
+                "navIcon hvtheme" + (files.data.hid == 0 ? " disableIt" : "")
               }
               fafa="faArrowLeft"
               width={14}
@@ -200,7 +204,9 @@ export const Explorer = () => {
             <Icon
               className={
                 "navIcon hvtheme" +
-                (files.hid + 1 == files.hist.length ? " disableIt" : "")
+                (files.data.hid + 1 == files.data.hist.length
+                  ? " disableIt"
+                  : "")
               }
               fafa="faArrowRight"
               width={14}
@@ -266,10 +272,10 @@ export const Explorer = () => {
 };
 
 const ContentArea = ({ searchtxt }) => {
-  const files = useSelector((state) => state.files);
-  const special = useSelector((state) => state.files.data.special);
+  const files = useSelector((state) => state.combined);
+  const special = useSelector((state) => state.combined.data.fdata.special);
   const [selected, setSelect] = useState(null);
-  const fdata = files.data.getId(files.cdir);
+  const fdata = files.data.fdata.getId(files.data.cdir);
   const dispatch = useDispatch();
 
   const handleClick = (e) => {
@@ -291,7 +297,7 @@ const ContentArea = ({ searchtxt }) => {
       dispatch({ type: "FILEPREV" });
     }
   };
-
+  console.log("FDATAAA", files.data.cdir);
   return (
     <div
       className="contentarea"
@@ -328,8 +334,8 @@ const ContentArea = ({ searchtxt }) => {
 };
 
 const NavPane = ({}) => {
-  const files = useSelector((state) => state.files);
-  const special = useSelector((state) => state.files.data.special);
+  const files = useSelector((state) => state.combined);
+  const special = useSelector((state) => state.combined.data.special);
 
   return (
     <div className="navpane win11Scroll">
