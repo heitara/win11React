@@ -96,11 +96,7 @@ export const Explorer = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.explorer);
   const files = useSelector((state) => state.combined);
-  // console.log("FDATA:", files.data.fdata);
-  // const userSpecialId = files.data.fdata.special["%user%"];
-
   const fdata = files.data.fdata.getId(files.data.cdir);
-  console.log("FDATA:", fdata);
   const [cpath, setPath] = useState(files.data.cpath);
   const [searchtxt, setShText] = useState("");
   const dispatch = useDispatch();
@@ -297,7 +293,6 @@ const ContentArea = ({ searchtxt }) => {
       dispatch({ type: "FILEPREV" });
     }
   };
-  console.log("FDATAAA", files.data.cdir);
   return (
     <div
       className="contentarea"

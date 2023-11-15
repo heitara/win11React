@@ -24,7 +24,6 @@ const combined = {
 
 const combinedReducer = (state = combined, action) => {
   console.log("Combined:", combined);
-  console.log("action:", action);
   var tmp = { ...state };
   var navHist = false;
   switch (action.type) {
