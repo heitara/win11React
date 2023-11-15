@@ -2,6 +2,7 @@ import {
   changeVal,
   deskDefState,
   filesDefState,
+  globalsDefState,
   menuDefState,
   settingsDefState,
   sidepaneDefState,
@@ -22,6 +23,7 @@ const combined = {
   ...widpaneDefState,
   data: { ...filesDefState },
   ...settingsDefState,
+  ...globalsDefState,
 };
 
 const combinedReducer = (state = combined, action) => {

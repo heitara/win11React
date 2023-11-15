@@ -458,10 +458,10 @@ const DetailPage = ({ app }) => {
 };
 
 const FrontPage = (props) => {
-  const ribbon = useSelector((state) => state.globals.ribbon);
-  const apprib = useSelector((state) => state.globals.apprib);
-  const gamerib = useSelector((state) => state.globals.gamerib);
-  const movrib = useSelector((state) => state.globals.movrib);
+  const ribbon = useSelector((state) => state.combined.ribbon);
+  const apprib = useSelector((state) => state.combined.apprib);
+  const gamerib = useSelector((state) => state.combined.gamerib);
+  const movrib = useSelector((state) => state.combined.movrib);
   const { t, i18n } = useTranslation();
 
   return (

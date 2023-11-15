@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSelector, useDispatch } from "react-redux";
-import "./general.scss";
+import React, { useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useDispatch, useSelector } from "react-redux";
+import "./general.scss";
 
-import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
+import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as AllIcons from "./icons";
 
 String.prototype.strip = function (c) {
@@ -227,7 +227,7 @@ export const Image = (props) => {
 export const SnapScreen = (props) => {
   const dispatch = useDispatch();
   const [delay, setDelay] = useState(false);
-  const lays = useSelector((state) => state.globals.lays);
+  const lays = useSelector((state) => state.combined.lays);
 
   const vr = "var(--radii)";
 
