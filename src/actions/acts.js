@@ -7,9 +7,8 @@ import {
   taskbarDefState,
   wallpaperDefState,
   walls,
+  widpaneDefState,
 } from "./actsDefState";
-
-import { widpaneDefState } from "../reducers/widpane";
 
 const combined = {
   ...startmenuDefState,
