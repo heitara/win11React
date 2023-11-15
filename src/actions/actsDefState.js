@@ -496,3 +496,59 @@ export const filesDefState = {
 filesDefState.hist.push(filesDefState.cdir);
 filesDefState.fdata = new Bin();
 filesDefState.fdata.parse(fdata);
+
+//settings:
+export const settingsDefState = {
+  system: {
+    power: {
+      saver: {
+        state: false,
+      },
+      battery: 100,
+    },
+    display: {
+      brightness: 100,
+      nightlight: {
+        state: false,
+      },
+      connect: false,
+    },
+  },
+  person: {
+    name: "Blue Edge",
+    theme: "light",
+    color: "blue",
+  },
+  devices: {
+    bluetooth: false,
+  },
+  network: {
+    wifi: {
+      state: true,
+    },
+    airplane: false,
+  },
+  privacy: {
+    location: {
+      state: false,
+    },
+  },
+};
+
+document.body.dataset.theme = settingsDefState.person.theme;
+
+export const changeVal = (obj, path, val = "togg") => {
+  var tmp = obj;
+  path = path.split(".");
+  for (var i = 0; i < path.length - 1; i++) {
+    tmp = tmp[path[i]];
+  }
+
+  if (val == "togg") {
+    tmp[path[path.length - 1]] = !tmp[path[path.length - 1]];
+  } else {
+    tmp[path[path.length - 1]] = val;
+  }
+
+  return obj;
+};

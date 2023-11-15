@@ -1,7 +1,9 @@
 import {
+  changeVal,
   deskDefState,
   filesDefState,
   menuDefState,
+  settingsDefState,
   sidepaneDefState,
   startmenuDefState,
   taskbarDefState,
@@ -19,12 +21,15 @@ const combined = {
   ...deskDefState,
   ...widpaneDefState,
   data: { ...filesDefState },
+  ...settingsDefState,
 };
 
 const combinedReducer = (state = combined, action) => {
   console.log("Combined:", combined);
   var tmp = { ...state };
   var navHist = false;
+  var tmpState = { ...state };
+  var changed = false;
   switch (action.type) {
     case "PANETHEM":
       return {
@@ -348,6 +353,25 @@ const combinedReducer = (state = combined, action) => {
       }
       navHist = true;
       break;
+
+    //settings:
+
+    case "STNGTHEME":
+      changed = true;
+      tmpState.person.theme = action.payload;
+      break;
+    case "STNGTOGG":
+      changed = true;
+      tmpState = changeVal(tmpState, action.payload);
+      break;
+    case "STNGSETV":
+      changed = true;
+      tmpState = changeVal(tmpState, action.payload.path, action.payload.value);
+      break;
+    case "SETTLOAD":
+      tmpState = { ...action.payload };
+      break;
+
     default:
       if (!navHist && tmp.data.cdir !== tmp.data.hist[tmp.data.hid]) {
         tmp.data.hist.splice(tmp.data.hid + 1);
@@ -365,6 +389,7 @@ const combinedReducer = (state = combined, action) => {
           tmp.data.cdir = tmp.data.fdata.special[tmp.data.cdir];
         }
       }
+      if (changed) localStorage.setItem("setting", JSON.stringify(tmpState));
 
       return tmp;
   }

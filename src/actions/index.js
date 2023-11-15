@@ -177,7 +177,7 @@ export const getTreeValue = (obj, path) => {
 };
 
 export const changeTheme = () => {
-  var thm = store.getState().setting.person.theme,
+  var thm = store.getState().combined.person.theme,
     thm = thm == "light" ? "dark" : "light";
   var icon = thm == "light" ? "sun" : "moon";
 
@@ -237,7 +237,7 @@ export const loadSettings = () => {
   sett = JSON.parse(sett);
 
   if (sett.person == null) {
-    sett = JSON.parse(JSON.stringify(store.getState().setting));
+    sett = JSON.parse(JSON.stringify(store.getState().combined));
     if (
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches

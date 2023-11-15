@@ -6,7 +6,7 @@ import "./widget.scss";
 export const WidPane = () => {
   const dispatch = useDispatch();
   const widget = useSelector((state) => state.combined);
-  const theme = useSelector((state) => state.setting.person.theme);
+  const theme = useSelector((state) => state.combined.person.theme);
   const getRandom = (x = 0) => {
     if (theme == "light")
       return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;

@@ -95,7 +95,7 @@ export const BandPane = () => {
 
 export const SidePane = () => {
   const sidepane = useSelector((state) => state.combined);
-  const setting = useSelector((state) => state.setting);
+  const setting = useSelector((state) => state.combined);
   const tasks = useSelector((state) => state.combined);
   const [pnstates, setPnstate] = useState([]);
   const dispatch = useDispatch();

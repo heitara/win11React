@@ -5,14 +5,12 @@ import appReducer from "./apps";
 // import deskReducer from "./desktop";
 import folderAndFileReducer from "./folderAndFile";
 import globalReducer from "./globals";
-import settReducer from "./settings";
 
 const allReducers = combineReducers({
   // desktop: deskReducer,
   combined: combinedReducer,
   apps: appReducer,
   globals: globalReducer,
-  setting: settReducer,
   folderAndFiles: folderAndFileReducer,
 });
 
