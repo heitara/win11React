@@ -35,8 +35,8 @@ const emap = (v) => {
 export const MicroStore = () => {
   const apps = useSelector((state) => state.apps);
   const queryParams = new URLSearchParams(window.location.search);
-  const wnapp = useSelector((state) => state.apps.store);
-  const hide = useSelector((state) => state.apps.store.hide);
+  const wnapp = useSelector((state) => state.combined.application.store);
+  const hide = useSelector((state) => state.combined.application.store.hide);
   const [tab, setTab] = useState("sthome");
   const [page, setPage] = useState(0);
   const [opapp, setOpapp] = useState(storedata[0]);

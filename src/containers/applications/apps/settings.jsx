@@ -7,7 +7,7 @@ import "./assets/settings.scss";
 import data from "./assets/settingsData.json";
 
 export const Settings = () => {
-  const wnapp = useSelector((state) => state.apps.settings); //leaveing it for now!
+  const wnapp = useSelector((state) => state.combined.application.settings);
   const theme = useSelector((state) => state.combined.person.theme);
   const dispatch = useDispatch();
 

@@ -9,9 +9,9 @@ const Taskbar = () => {
     return state.combined;
   });
   const apps = useSelector((state) => {
-    var tmpApps = { ...state.apps };
-    for (var i = 0; i < state.combined.apps.length; i++) {
-      tmpApps[state.combined.apps[i].icon].task = true;
+    var tmpApps = { ...state.combined.application };
+    for (var i = 0; i < state.combined.application.length; i++) {
+      tmpApps[state.combined.application[i].icon].task = true;
     }
     return tmpApps;
   });

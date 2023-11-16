@@ -1,4 +1,10 @@
-import { desktopApps, pinnedApps, recentApps, taskApps } from "../utils";
+import {
+  allApps,
+  desktopApps,
+  pinnedApps,
+  recentApps,
+  taskApps,
+} from "../utils";
 
 import { Bin } from "../utils/bin";
 import fdata from "./dir.json";
@@ -763,3 +769,27 @@ export const globalsDefState = {
     "nobody",
   ],
 };
+
+//apps:
+var dev = "";
+if (import.meta.env.MODE == "development") {
+  dev = ""; // set the name (lowercase) of the app you are developing so that it will be opened on refresh
+}
+
+export const appsDefState = {};
+for (let i = 0; i < allApps.length; i++) {
+  appsDefState[allApps[i].icon] = allApps[i];
+  appsDefState[allApps[i].icon].size = "full";
+  appsDefState[allApps[i].icon].hide = true;
+  appsDefState[allApps[i].icon].max = null;
+  appsDefState[allApps[i].icon].z = 0;
+
+  if (allApps[i].icon == dev) {
+    appsDefState[allApps[i].icon].size = "mini";
+    appsDefState[allApps[i].icon].hide = false;
+    appsDefState[allApps[i].icon].max = true;
+    appsDefState[allApps[i].icon].z = 1;
+  }
+}
+
+appsDefState.hz = 2;

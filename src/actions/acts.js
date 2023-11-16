@@ -1,4 +1,5 @@
 import {
+  appsDefState,
   changeVal,
   deskDefState,
   filesDefState,
@@ -24,6 +25,7 @@ const combined = {
   data: { ...filesDefState },
   ...settingsDefState,
   ...globalsDefState,
+  application: { ...appsDefState },
 };
 
 const combinedReducer = (state = combined, action) => {
@@ -32,6 +34,8 @@ const combinedReducer = (state = combined, action) => {
   var navHist = false;
   var tmpState = { ...state };
   var changed = false;
+  var appsTemp = { ...state.application };
+  let obj, keys;
   switch (action.type) {
     case "PANETHEM":
       return {
@@ -374,6 +378,67 @@ const combinedReducer = (state = combined, action) => {
       tmpState = { ...action.payload };
       break;
 
+    //apps:
+
+    case "EDGELINK":
+      obj = { ...appsTemp["edge"] };
+      if (action.payload && action.payload.startsWith("http")) {
+        obj.url = action.payload;
+      } else if (action.payload && action.payload.length !== 0) {
+        obj.url = "https://www.bing.com/search?q=" + action.payload;
+      } else {
+        obj.url = null;
+      }
+      obj.size = "full";
+      obj.hide = false;
+      obj.max = true;
+      appsTemp.hz += 1;
+      obj.z = appsTemp.hz;
+      appsTemp["edge"] = obj;
+      return appsTemp;
+
+    case "SHOWDSK":
+      keys = Object.keys(appsTemp);
+      for (let key of keys) {
+        obj = appsTemp[key];
+        if (!obj.hide) {
+          obj.max = false;
+          if (obj.z === appsTemp.hz) {
+            appsTemp.hz -= 1;
+          }
+          obj.z = -1;
+          appsTemp[key] = obj;
+        }
+      }
+      return appsTemp;
+
+    case "EXTERNAL":
+      window.open(action.payload, "_blank");
+      return state;
+
+    case "OPENTERM":
+      obj = { ...appsTemp["terminal"] };
+      obj.dir = action.payload;
+      obj.size = "full";
+      obj.hide = false;
+      obj.max = true;
+      appsTemp.hz += 1;
+      obj.z = appsTemp.hz;
+      appsTemp["terminal"] = obj;
+      return appsTemp;
+
+    case "ADDAPP":
+      appsTemp[action.payload.icon] = action.payload;
+      appsTemp[action.payload.icon].size = "full";
+      appsTemp[action.payload.icon].hide = true;
+      appsTemp[action.payload.icon].max = null;
+      appsTemp[action.payload.icon].z = 0;
+      return appsTemp;
+
+    case "DELAPP":
+      delete appsTemp[action.payload];
+      return appsTemp;
+
     default:
       if (!navHist && tmp.data.cdir !== tmp.data.hist[tmp.data.hid]) {
         tmp.data.hist.splice(tmp.data.hid + 1);
@@ -391,9 +456,84 @@ const combinedReducer = (state = combined, action) => {
           tmp.data.cdir = tmp.data.fdata.special[tmp.data.cdir];
         }
       }
-      if (changed) localStorage.setItem("setting", JSON.stringify(tmpState));
+      if (changed) {
+        localStorage.setItem("setting", JSON.stringify(tmpState));
+      }
 
-      return tmp;
+      keys = Object.keys(state.application);
+      for (let key of keys) {
+        obj = state.application[key];
+        if (obj.action === action.type) {
+          appsTemp = { ...state };
+          switch (action.payload) {
+            case "full":
+              obj.size = "full";
+              obj.hide = false;
+              obj.max = true;
+              appsTemp.hz += 1;
+              obj.z = appsTemp.hz;
+              break;
+            case "close":
+              obj.hide = true;
+              obj.max = null;
+              obj.z = -1;
+              appsTemp.hz -= 1;
+              break;
+            case "mxmz":
+              obj.size = obj.size !== "full" ? "full" : "mini";
+              obj.hide = false;
+              obj.max = true;
+              appsTemp.hz += 1;
+              obj.z = appsTemp.hz;
+              break;
+            case "togg":
+              obj.hide = false;
+              if (obj.z !== appsTemp.hz) {
+                obj.max = true;
+                appsTemp.hz += 1;
+                obj.z = appsTemp.hz;
+              } else {
+                obj.max = !obj.max;
+                appsTemp.hz = obj.max ? appsTemp.hz + 1 : appsTemp.hz - 1;
+              }
+              break;
+            case "mnmz":
+              obj.max = false;
+              obj.hide = false;
+              if (obj.z === appsTemp.hz) {
+                appsTemp.hz -= 1;
+              }
+              obj.z = -1;
+              break;
+            case "resize":
+              obj.size = "cstm";
+              obj.hide = false;
+              obj.max = true;
+              if (obj.z !== appsTemp.hz) appsTemp.hz += 1;
+              obj.z = appsTemp.hz;
+              obj.dim = action.dim;
+              break;
+            case "front":
+              obj.hide = false;
+              obj.max = true;
+              if (obj.z !== appsTemp.hz) {
+                appsTemp.hz += 1;
+                obj.z = appsTemp.hz;
+              }
+              break;
+            default:
+              break;
+          }
+          appsTemp[key] = obj;
+          return appsTemp;
+        }
+      }
+
+      return {
+        ...tmp,
+        ...appsTemp,
+        ...tmpState,
+      };
   }
 
   return tmp;

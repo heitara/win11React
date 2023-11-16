@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Icon, ToolBar, LazyComponent } from "../../../utils/general";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Icon, LazyComponent, ToolBar } from "../../../utils/general";
 
 export const EdgeMenu = () => {
-  const wnapp = useSelector((state) => state.apps.edge);
+  const wnapp = useSelector((state) => state.combined.application.edge);
   const [url, setUrl] = useState("https://www.google.com/?igu=1");
   const [ierror, setErr] = useState(true);
   const [isTyping, setTyping] = useState(false);
@@ -31,7 +31,7 @@ export const EdgeMenu = () => {
 
   const isValidURL = (string) => {
     var res = string.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
     );
     return res !== null;
   };

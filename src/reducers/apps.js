@@ -91,8 +91,11 @@ const appReducer = (state = defState, action) => {
 
     default:
       keys = Object.keys(state);
+      // console.log("keys:", keys);
+
       for (let key of keys) {
         obj = state[key];
+        // console.log("OBJ:", obj);
         if (obj.action === action.type) {
           tmpState = { ...state };
           switch (action.payload) {

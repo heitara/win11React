@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Icon, ToolBar } from "../../../utils/general";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Icon, ToolBar } from "../../../utils/general";
 
 export const Camera = () => {
-  const wnapp = useSelector((state) => state.apps.camera);
-  const hide = useSelector((state) => state.apps.camera.hide);
+  const wnapp = useSelector((state) => state.combined.application.camera);
+  const hide = useSelector((state) => state.combined.application.camera.hide);
   const [stream, setStream] = useState(null);
   const { t } = useTranslation();
 

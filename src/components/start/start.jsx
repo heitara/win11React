@@ -28,10 +28,10 @@ export const StartMenu = () => {
     }
 
     var allApps = [],
-      tmpApps = Object.keys(state.apps)
+      tmpApps = Object.keys(state.combined.application)
         .filter((x) => x != "hz")
         .map((key) => {
-          return state.apps[key];
+          return state.combined.application[key];
         });
 
     tmpApps.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
+import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
+import { useSelector } from "react-redux";
+import { Icon, Image, LazyComponent, ToolBar } from "../../../utils/general";
 import jiosaavn from "./assets/jiosaavn";
 import data from "./assets/songs.json";
 
@@ -19,7 +19,7 @@ String.prototype.to250 = function () {
 };
 
 export const Spotify = () => {
-  const wnapp = useSelector((state) => state.apps.spotify);
+  const wnapp = useSelector((state) => state.combined.application.spotify);
   const [tab, setTab] = useState(0);
   const [paused, setPause] = useState(true);
   const [shfle, setShuffle] = useState(0);

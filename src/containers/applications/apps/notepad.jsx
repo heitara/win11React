@@ -1,10 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToolBar } from "../../../utils/general";
 
 export const Notepad = () => {
-  const wnapp = useSelector((state) => state.apps.notepad);
-  
+  const wnapp = useSelector((state) => state.combined.application.notepad);
+
   return (
     <div
       className="notepad floatTab dpShad"
