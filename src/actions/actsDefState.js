@@ -793,3 +793,9 @@ for (let i = 0; i < allApps.length; i++) {
 }
 
 appsDefState.hz = 2;
+
+//FolderAndFile:
+
+export const fileAndFolderDefState = {
+  files: [],
+};
