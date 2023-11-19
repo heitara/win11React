@@ -20,7 +20,7 @@ const combined = {
   ...taskbarDefState,
   ...wallpaperDefState,
   ...menuDefState,
-  ...deskDefState,
+  desktop: { ...deskDefState },
   ...widpaneDefState,
   data: { ...filesDefState },
   ...settingsDefState,
@@ -253,29 +253,29 @@ const combinedReducer = (state = combined, action) => {
     //desktop.js:
 
     case "DESKREM":
-      var arr = state.dskApps.filter((x) => x.name !== action.payload);
+      var arr = state.apps.filter((x) => x.name !== action.payload);
 
       localStorage.setItem("desktop", JSON.stringify(arr.map((x) => x.name)));
-      return { ...state, dskApps: arr };
+      return { ...state, apps: arr };
     case "DESKADD":
       arr.push(action.payload);
 
       localStorage.setItem("desktop", JSON.stringify(arr.map((x) => x.name)));
-      return { ...state, dskApps: arr };
+      return { ...state, apps: arr };
     case "DESKHIDE":
       return {
         ...state,
-        dskHide: true,
+        hide: true,
       };
     case "DESKSHOW":
       return {
         ...state,
-        dskHide: false,
+        hide: false,
       };
     case "DESKTOGG":
       return {
         ...state,
-        dskHide: !state.dskHide,
+        hide: !state.hide,
       };
     case "DESKSIZE":
       return {

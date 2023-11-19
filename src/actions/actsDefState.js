@@ -136,8 +136,8 @@ export const wallpaperDefState = {
 
 //desktop.js:
 export const deskDefState = {
-  dskApps: desktopApps,
-  dskHide: false,
+  apps: desktopApps,
+  hide: false,
   size: 1,
   sort: "none",
   abOpen: false,
