@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from "../reducers";
-import { allApps, dfApps } from "../utils";
+import { dfApps } from "../utils";
 import { gene_name } from "../utils/apps";
 
 export const dispatchAction = (event) => {
@@ -30,12 +30,13 @@ export const changeIconSize = (size, menu) => {
 
   if (size == "large") {
     tmpMenu.menus.desk[0].opts[0].dot = true;
-    isize = 1.5;
+    menu.desktop.size = 1.5;
   } else if (size == "medium") {
     tmpMenu.menus.desk[0].opts[1].dot = true;
-    isize = 1.2;
+    menu.desktop.size = 1.2;
   } else {
     tmpMenu.menus.desk[0].opts[2].dot = true;
+    menu.desktop.size = 1;
   }
 
   refresh("", tmpMenu);

@@ -145,7 +145,7 @@ export const deskDefState = {
 
 //menu.js:
 export const menuDefState = {
-  menuHide: true, //changed
+  menuHide: true,
   top: 80,
   left: 360,
   opts: "desk",
@@ -159,7 +159,7 @@ export const menuDefState = {
     task: {
       width: "220px",
       secwid: "120px",
-      ispace: false, // show the space for icons in menu
+      ispace: false,
     },
     app: {
       width: "310px",
