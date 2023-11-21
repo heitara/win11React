@@ -118,6 +118,8 @@ export const WnTerminal = () => {
       } else {
         tmpStack.push(pwd);
       }
+    } else if (type === "mkdir") {
+      dispatch({ type: "CREATE_FOLDER", payload: "New Folder" });
     } else if (type == "dir") {
       tmpStack.push(" Directory of " + pwd);
       tmpStack.push("");

@@ -239,7 +239,7 @@ export const menuDefState = {
           {
             name: "Folder",
             action: "CREATE_FOLDER",
-            payload: {},
+            payload: "New Folder",
           },
           {
             name: "Text Document",

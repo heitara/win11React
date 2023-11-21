@@ -1,5 +1,5 @@
-import { Bin } from "../utils/bin";
-import fdata from "./dir.json";
+// import { Bin } from "../utils/bin";
+// import fdata from "./dir.json";
 
 export const filesDefState = {
   cdir: "%user%",

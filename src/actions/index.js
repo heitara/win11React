@@ -30,18 +30,17 @@ export const changeIconSize = (size, menu) => {
 
   if (size == "large") {
     tmpMenu.menus.desk[0].opts[0].dot = true;
-    menu.desktop.size = 1.5;
+    isize = 1.5;
   } else if (size == "medium") {
     tmpMenu.menus.desk[0].opts[1].dot = true;
-    menu.desktop.size = 1.2;
+    isize = 1.2;
   } else {
     tmpMenu.menus.desk[0].opts[2].dot = true;
-    menu.desktop.size = 1;
   }
 
-  refresh("", tmpMenu);
+  // refresh("", tmpMenu);
   store.dispatch({ type: "DESKSIZE", payload: isize });
-  store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
+  // store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
 };
 
 export const deskHide = (payload, menu) => {
@@ -59,10 +58,13 @@ export const changeSort = (sort, menu) => {
   tmpMenu.menus.desk[1].opts[2].dot = false;
   if (sort == "name") {
     tmpMenu.menus.desk[1].opts[0].dot = true;
+    menu.desktop.sort = "name";
   } else if (sort == "size") {
     tmpMenu.menus.desk[1].opts[1].dot = true;
+    menu.desktop.sort = "size";
   } else {
     tmpMenu.menus.desk[1].opts[2].dot = true;
+    menu.desktop.sort = "date modified";
   }
 
   refresh("", tmpMenu);
@@ -266,9 +268,9 @@ export const handleFileOpen = (id) => {
   }
 };
 
-export const createFolder = () => {
-  store.dispatch({ type: "CREATE_FOLDER" });
-};
+// export const createFolder = () => {
+//   store.dispatch({ type: "CREATE_FOLDER" });
+// };
 
 export const createTextDoc = () => {
   store.dispatch({ type: "CREATE_TEXT_DOC" });

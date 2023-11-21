@@ -31,7 +31,8 @@ const combined = {
 };
 
 const combinedReducer = (state = combined, action) => {
-  console.log("Combined:", combined);
+  console.log("action:", action);
+  console.log("Combined:", state);
   var tmp = { ...state };
   var navHist = false;
   var tmpState = { ...state };
@@ -280,10 +281,13 @@ const combinedReducer = (state = combined, action) => {
         hide: !state.hide,
       };
     case "DESKSIZE":
-      return {
+      console.log("TESST!!", action);
+      let newState = {
         ...state,
-        size: action.payload,
+        desktop: { ...state.desktop, size: action.payload },
       };
+      // console.log("newState", newState);
+      return newState;
     case "DESKSORT":
       return {
         ...state,
@@ -445,9 +449,18 @@ const combinedReducer = (state = combined, action) => {
     case "CREATE_FOLDER":
       const newFolder = {
         id: Date.now(),
-        name: "New Folder",
         type: "folder",
+        info: {},
       };
+      let cdir = state.data.cdir;
+      const bin = state.data.fdata;
+      let parentItem = bin.getId(cdir);
+      let newFolderItem = bin.parseFolder(
+        newFolder,
+        action.payload,
+        parentItem
+      );
+      parentItem.data.push(newFolderItem);
       return {
         ...state,
         files: [...state.files, newFolder],
