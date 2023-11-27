@@ -268,9 +268,9 @@ export const handleFileOpen = (id) => {
   }
 };
 
-// export const createFolder = () => {
-//   store.dispatch({ type: "CREATE_FOLDER" });
-// };
+export const createFolder = () => {
+  store.dispatch({ type: "CREATE_FOLDER" });
+};
 
 export const createTextDoc = () => {
   store.dispatch({ type: "CREATE_TEXT_DOC" });

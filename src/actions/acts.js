@@ -452,7 +452,7 @@ const combinedReducer = (state = combined, action) => {
         type: "folder",
         info: {},
       };
-      let cdir = state.data.cdir;
+      let cdir = state.data.cdir; //id of the dir
       const bin = state.data.fdata;
       let parentItem = bin.getId(cdir);
       let newFolderItem = bin.parseFolder(

@@ -367,10 +367,14 @@ const NavPane = ({}) => {
 };
 
 const Ribbon = ({}) => {
+  const dispatch = useDispatch();
+  const handleFolderCreation = () => {
+    dispatch({ type: "CREATE_FOLDER", payload: "New Folder" });
+  };
   return (
     <div className="msribbon flex">
       <div className="ribsec">
-        <div className="drdwcont flex">
+        <div onClick={handleFolderCreation} className="drdwcont flex">
           <Icon src="new" ui width={18} margin="0 6px" />
           <span>New</span>
         </div>
