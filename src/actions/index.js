@@ -256,11 +256,13 @@ export const loadSettings = () => {
     loadWidget();
   }
 };
-
+const item = store.getState().combined.data;
+console.log("Itemmmmmmssssss:", item);
 // mostly file explorer
 export const handleFileOpen = (id) => {
   // handle double click open
-  const item = store.getState().files.data.getId(id);
+  const item = store.getState().combined.data.fdata.getId(id);
+  console.log("Item", item);
   if (item != null) {
     if (item.type == "folder") {
       store.dispatch({ type: "FILEDIR", payload: item.id });
