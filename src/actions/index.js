@@ -282,3 +282,9 @@ export const getFileContent = (id) => {
   const item = store.getState().files.data.find((file) => file.id === id);
   return item ? item.content : null;
 };
+
+export const listDir = () => {
+  store.dispatch({ type: "LIST_DIR" });
+};
+
+export const CLEAR_TERMINAL_OUTPUT = "CLEAR_TERMINAL_OUTPUT";

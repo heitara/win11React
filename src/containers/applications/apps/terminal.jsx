@@ -12,8 +12,19 @@ export const WnTerminal = () => {
   const [pwd, setPwd] = useState("C:\\Users\\Blue");
   const [lastCmd, setLsc] = useState(0);
   const [wntitle, setWntitle] = useState("Terminal");
+  const terminalOutput = useSelector((state) => state.combined.terminalOutput);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (terminalOutput) {
+      setStack((currentStack) => [
+        ...currentStack,
+        pwd + "> ls",
+        ...terminalOutput.split("\n"),
+      ]);
+    }
+  }, [terminalOutput, pwd]);
 
   let IpDetails = [];
   const getIPDetails = async () => {
@@ -120,6 +131,11 @@ export const WnTerminal = () => {
       }
     } else if (type === "mkdir") {
       dispatch({ type: "CREATE_FOLDER", payload: "New Folder" });
+    } else if (type === "ls") {
+      dispatch({ type: "CLEAR_TERMINAL_OUTPUT" });
+      setTimeout(() => {
+        dispatch({ type: "LIST_DIR" });
+      }, 10);
     } else if (type == "dir") {
       tmpStack.push(" Directory of " + pwd);
       tmpStack.push("");

@@ -28,6 +28,7 @@ const combined = {
   ...globalsDefState,
   application: { ...appsDefState },
   ...fileAndFolderDefState,
+  terminalOutput: "",
 };
 
 const combinedReducer = (state = combined, action) => {
@@ -488,6 +489,32 @@ const combinedReducer = (state = combined, action) => {
       return {
         ...state,
         files: [...state.files, newTextDoc],
+      };
+
+    case "LIST_DIR":
+      const currentDirId = state.data.cdir;
+      const currentDirItem = state.data.fdata.getId(currentDirId);
+
+      if (currentDirItem && currentDirItem.type === "folder") {
+        const dirContents = currentDirItem.data
+          .map((item) => item.name)
+          .join("\n");
+        return {
+          ...state,
+          terminalOutput: dirContents,
+        };
+      } else {
+        return {
+          ...state,
+          terminalOutput:
+            "Error: Current directory not found or is not a folder",
+        };
+      }
+
+    case "CLEAR_TERMINAL_OUTPUT":
+      return {
+        ...state,
+        terminalOutput: "",
       };
 
     default:
