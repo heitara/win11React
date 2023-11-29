@@ -13,8 +13,15 @@ export const WnTerminal = () => {
   const [lastCmd, setLsc] = useState(0);
   const [wntitle, setWntitle] = useState("Terminal");
   const terminalOutput = useSelector((state) => state.combined.terminalOutput);
+  const cdir = useSelector((state) => state.combined.data.cdir);
+  const bin = useSelector((state) => state.combined.data.fdata);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fullPath = getPathFromCdir(cdir, bin);
+    setPwd(fullPath);
+  }, [cdir, bin]);
 
   useEffect(() => {
     if (terminalOutput) {
@@ -25,6 +32,42 @@ export const WnTerminal = () => {
       ]);
     }
   }, [terminalOutput, pwd]);
+
+  const getPathFromCdir = (cdir, bin) => {
+    return bin.getPath(cdir);
+  };
+
+  const resolvePathId = (currentPath, arg, bin) => {
+    const pathSegments = currentPath.split("\\").filter((segment) => segment);
+
+    if (arg === ".") {
+      return bin.parsePath(currentPath);
+    } else if (arg === "..") {
+      if (pathSegments.length > 0) {
+        pathSegments.pop();
+      }
+      return bin.parsePath(pathSegments.join("\\"));
+    }
+
+    let newPath;
+    if (arg.includes(":")) {
+      newPath = arg;
+    } else {
+      pathSegments.push(arg);
+      newPath = pathSegments.join("\\");
+    }
+
+    return bin.parsePath(newPath);
+  };
+
+  const getDirContents = (dirId) => {
+    const currentDirItem = bin.getId(dirId);
+    if (currentDirItem && currentDirItem.type === "folder") {
+      return currentDirItem.data.map((item) => item.name).join("\n");
+    } else {
+      return "No contents found.";
+    }
+  };
 
   let IpDetails = [];
   const getIPDetails = async () => {
@@ -54,15 +97,18 @@ export const WnTerminal = () => {
 
     if (pwd != "C:\\") {
       for (var i = 0; i < curr.length; i++) {
-        // console.log(tdir);
-        tdir = tdir[curr[i]];
+        if (tdir && tdir[curr[i]]) {
+          tdir = tdir[curr[i]];
+        } else {
+          return {};
+        }
       }
     }
 
     if (isFile == "") {
-      return Object.keys(tdir);
+      return tdir ? Object.keys(tdir) : [];
     } else {
-      return tdir[isFile] || {};
+      return tdir && tdir[isFile] ? tdir[isFile] : {};
     }
   };
 
@@ -132,10 +178,33 @@ export const WnTerminal = () => {
     } else if (type === "mkdir") {
       dispatch({ type: "CREATE_FOLDER", payload: "New Folder" });
     } else if (type === "ls") {
+      const currentDirId = cdir;
+      const contents = getDirContents(currentDirId);
+      setStack((currentStack) => [
+        ...currentStack,
+        pwd + "> ls",
+        ...contents.split("\n"),
+      ]);
+
       dispatch({ type: "CLEAR_TERMINAL_OUTPUT" });
       setTimeout(() => {
         dispatch({ type: "LIST_DIR" });
       }, 10);
+    } else if (type === "cd") {
+      if (arg.length) {
+        const newPathId = resolvePathId(pwd, arg, bin);
+        if (newPathId) {
+          dispatch({ type: "CHANGE_DIR", payload: newPathId });
+        } else {
+          tmpStack.push("The system cannot find the path specified.");
+        }
+      } else {
+        tmpStack.push("Current directory: " + pwd);
+      }
+    } else if (type === "ls") {
+      dispatch({ type: "LIST_DIR" });
+    } else if (type === "ls") {
+      dispatch({ type: "LIST_DIR" });
     } else if (type == "dir") {
       tmpStack.push(" Directory of " + pwd);
       tmpStack.push("");

@@ -517,6 +517,21 @@ const combinedReducer = (state = combined, action) => {
         terminalOutput: "",
       };
 
+    case "CHANGE_DIR":
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          cdir: action.payload,
+        },
+      };
+
+    case "UPDATE_TERMINAL_OUTPUT":
+      return {
+        ...state,
+        terminalOutput: action.payload,
+      };
+
     default:
       if (!navHist && tmp.data.cdir !== tmp.data.hist[tmp.data.hid]) {
         tmp.data.hist.splice(tmp.data.hid + 1);

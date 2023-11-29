@@ -288,3 +288,5 @@ export const listDir = () => {
 };
 
 export const CLEAR_TERMINAL_OUTPUT = "CLEAR_TERMINAL_OUTPUT";
+
+export const UPDATE_TERMINAL_OUTPUT = "UPDATE_TERMINAL_OUTPUT";
