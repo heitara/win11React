@@ -63,12 +63,14 @@ export const WnTerminal = () => {
   const getDirContents = (dirId) => {
     const currentDirItem = bin.getId(dirId);
     if (currentDirItem && currentDirItem.type === "folder") {
+      if (currentDirItem.data.length === 0) {
+        return "Directory is empty.";
+      }
       return currentDirItem.data.map((item) => item.name).join("\n");
     } else {
       return "No contents found.";
     }
   };
-
   let IpDetails = [];
   const getIPDetails = async () => {
     try {
@@ -142,39 +144,39 @@ export const WnTerminal = () => {
           }
         }
       }
-    } else if (type == "cd") {
-      if (arg.length) {
-        var errp = true;
-        var curr = pwd == "C:\\" ? [] : pwd.replace("C:\\", "").split("\\");
+      // } else if (type == "cd") {
+      //   if (arg.length) {
+      //     var errp = true;
+      //     var curr = pwd == "C:\\" ? [] : pwd.replace("C:\\", "").split("\\");
 
-        if (arg == ".") {
-          errp = false;
-        } else if (arg == "..") {
-          errp = false;
-          curr.pop();
-          setPwd("C:\\" + curr.join("\\"));
-        } else if (!arg.includes(".")) {
-          var tdir = dirFolders();
+      //     if (arg == ".") {
+      //       errp = false;
+      //     } else if (arg == "..") {
+      //       errp = false;
+      //       curr.pop();
+      //       setPwd("C:\\" + curr.join("\\"));
+      //     } else if (!arg.includes(".")) {
+      //       var tdir = dirFolders();
 
-          for (var i = 0; i < tdir.length; i++) {
-            if (arg.toLowerCase() == tdir[i].toLowerCase() && errp) {
-              curr.push(tdir[i]);
-              errp = false;
-              setPwd("C:\\" + curr.join("\\"));
-              break;
-            }
-          }
-        } else {
-          errp = false;
-          tmpStack.push("The directory name is invalid.");
-        }
+      //       for (var i = 0; i < tdir.length; i++) {
+      //         if (arg.toLowerCase() == tdir[i].toLowerCase() && errp) {
+      //           curr.push(tdir[i]);
+      //           errp = false;
+      //           setPwd("C:\\" + curr.join("\\"));
+      //           break;
+      //         }
+      //       }
+      //     } else {
+      //       errp = false;
+      //       tmpStack.push("The directory name is invalid.");
+      //     }
 
-        if (errp) {
-          tmpStack.push("The system cannot find the path specified.");
-        }
-      } else {
-        tmpStack.push(pwd);
-      }
+      //     if (errp) {
+      //       tmpStack.push("The system cannot find the path specified.");
+      //     }
+      //   } else {
+      //     tmpStack.push(pwd);
+      //   }
     } else if (type === "mkdir") {
       dispatch({ type: "CREATE_FOLDER", payload: "New Folder" });
     } else if (type === "ls") {
@@ -195,6 +197,8 @@ export const WnTerminal = () => {
         const newPathId = resolvePathId(pwd, arg, bin);
         if (newPathId) {
           dispatch({ type: "CHANGE_DIR", payload: newPathId });
+          const fullPath = getPathFromCdir(newPathId, bin);
+          setPwd(fullPath);
         } else {
           tmpStack.push("The system cannot find the path specified.");
         }

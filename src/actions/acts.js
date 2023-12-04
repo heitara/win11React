@@ -518,12 +518,21 @@ const combinedReducer = (state = combined, action) => {
       };
 
     case "CHANGE_DIR":
+      const newCdir = action.payload;
+      const newDirItem = state.data.fdata.getId(newCdir);
+
+      let newDirContents = "No contents found.";
+      if (newDirItem && newDirItem.type === "folder") {
+        newDirContents = newDirItem.data.map((item) => item.name).join("\n");
+      }
+
       return {
         ...state,
         data: {
           ...state.data,
-          cdir: action.payload,
+          cdir: newCdir,
         },
+        terminalOutput: newDirContents,
       };
 
     case "UPDATE_TERMINAL_OUTPUT":

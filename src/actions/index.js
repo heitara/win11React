@@ -256,8 +256,7 @@ export const loadSettings = () => {
     loadWidget();
   }
 };
-const item = store.getState().combined.data;
-console.log("Itemmmmmmssssss:", item);
+
 // mostly file explorer
 export const handleFileOpen = (id) => {
   // handle double click open
