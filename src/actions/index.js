@@ -257,15 +257,28 @@ export const loadSettings = () => {
   }
 };
 
-// mostly file explorer
+// // mostly file explorer
+// export const handleFileOpen = (id) => {
+//   // handle double click open
+//   const item = store.getState().combined.data.fdata.getId(id);
+//   console.log("Item", item);
+//   if (item != null) {
+//     if (item.type == "folder") {
+//       store.dispatch({ type: "FILEDIR", payload: item.id });
+//     }
+//   }
+// };
+
 export const handleFileOpen = (id) => {
-  // handle double click open
+  console.log("ID to open", id);
+
   const item = store.getState().combined.data.fdata.getId(id);
-  console.log("Item", item);
-  if (item != null) {
-    if (item.type == "folder") {
-      store.dispatch({ type: "FILEDIR", payload: item.id });
-    }
+  console.log("Opening Item", item);
+
+  if (item && item.type === "folder") {
+    store.dispatch({ type: "FILEDIR", payload: item.id });
+  } else if (item && item.type === "file") {
+    store.dispatch({ type: "OPEN_NOTEPAD", payload: { id: id } });
   }
 };
 

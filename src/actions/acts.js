@@ -541,6 +541,45 @@ const combinedReducer = (state = combined, action) => {
         terminalOutput: action.payload,
       };
 
+    case "CREATE_FILE":
+      const newFile = {
+        id: Date.now(),
+        type: "file",
+        name: action.payload,
+        content: "",
+        info: {
+          icon: "folder", // for now because we need an icon
+        },
+      };
+
+      let currentDirID = state.data.cdir;
+      const filesystem = state.data.fdata;
+      let parentDirectory = filesystem.getId(currentDirID);
+
+      if (parentDirectory && parentDirectory.type === "folder") {
+        parentDirectory.data.push(newFile);
+
+        return {
+          ...state,
+          files: [...state.files, newFile],
+        };
+      } else {
+        console.error("Cannot create file in a non-folder type");
+        return state;
+      }
+
+    case "OPEN_NOTEPAD":
+      const notepadApp = {
+        name: "Text Document",
+        action: "NOTEPAD",
+        payload: "full",
+      };
+
+      return {
+        ...state,
+        openApplications: [...state.openApplications, notepadApp],
+      };
+
     default:
       if (!navHist && tmp.data.cdir !== tmp.data.hist[tmp.data.hid]) {
         tmp.data.hist.splice(tmp.data.hid + 1);

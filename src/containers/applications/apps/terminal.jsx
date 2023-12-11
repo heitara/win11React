@@ -15,6 +15,7 @@ export const WnTerminal = () => {
   const terminalOutput = useSelector((state) => state.combined.terminalOutput);
   const cdir = useSelector((state) => state.combined.data.cdir);
   const bin = useSelector((state) => state.combined.data.fdata);
+  const [shouldUpdateStackWithLs, setShouldUpdateStackWithLs] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -205,10 +206,12 @@ export const WnTerminal = () => {
       } else {
         tmpStack.push("Current directory: " + pwd);
       }
-    } else if (type === "ls") {
-      dispatch({ type: "LIST_DIR" });
-    } else if (type === "ls") {
-      dispatch({ type: "LIST_DIR" });
+    } else if (type === "touch") {
+      if (arg.length) {
+        dispatch({ type: "CREATE_FILE", payload: arg });
+      } else {
+        tmpStack.push("touch: missing file operand");
+      }
     } else if (type == "dir") {
       tmpStack.push(" Directory of " + pwd);
       tmpStack.push("");
