@@ -544,7 +544,7 @@ const combinedReducer = (state = combined, action) => {
     case "CREATE_FILE":
       const newFile = {
         id: Date.now(),
-        type: "file",
+        type: "app",
         name: action.payload,
         content: "",
         info: {
@@ -556,12 +556,18 @@ const combinedReducer = (state = combined, action) => {
       const filesystem = state.data.fdata;
       let parentDirectory = filesystem.getId(currentDirID);
 
+      let newFileItem = filesystem.parseFolder(
+        newFile,
+        action.payload,
+        parentDirectory
+      );
+
       if (parentDirectory && parentDirectory.type === "folder") {
-        parentDirectory.data.push(newFile);
+        parentDirectory.data.push(newFileItem);
 
         return {
           ...state,
-          files: [...state.files, newFile],
+          files: [...state.files, newFileItem],
         };
       } else {
         console.error("Cannot create file in a non-folder type");
@@ -569,15 +575,14 @@ const combinedReducer = (state = combined, action) => {
       }
 
     case "OPEN_NOTEPAD":
-      const notepadApp = {
-        name: "Text Document",
-        action: "NOTEPAD",
-        payload: "full",
-      };
-
+      let notepadHide = !state.notepad.hide;
       return {
         ...state,
-        openApplications: [...state.openApplications, notepadApp],
+        notepad: {
+          ...state.notepad,
+          hide: notepadHide,
+          content: action.payload.content,
+        },
       };
 
     default:
