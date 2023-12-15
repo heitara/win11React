@@ -2,8 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToolBar } from "../../../utils/general";
 
+import store from "../../../reducers";
+
 export const Notepad = () => {
   const wnapp = useSelector((state) => state.combined.application.notepad);
+
+  const handleContentChange = (e) => {
+    store.dispatch({ type: "UPDATE_NOTEPAD_CONTENT", payload: e.target.value });
+  };
 
   return (
     <div
@@ -31,7 +37,11 @@ export const Notepad = () => {
         </div>
         <div className="restWindow h-full flex-grow">
           <div className="w-full h-full overflow-hidden">
-            <textarea className="noteText win11Scroll" id="textpad" />
+            <textarea
+              className="noteText win11Scroll"
+              id="textpad"
+              onChange={handleContentChange}
+            />
           </div>
         </div>
       </div>

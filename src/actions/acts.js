@@ -544,7 +544,7 @@ const combinedReducer = (state = combined, action) => {
     case "CREATE_FILE":
       const newFile = {
         id: Date.now(),
-        type: "app",
+        type: "file",
         name: action.payload,
         content: "",
         info: {
@@ -575,13 +575,24 @@ const combinedReducer = (state = combined, action) => {
       }
 
     case "OPEN_NOTEPAD":
-      let notepadHide = !state.notepad.hide;
+      state.notepad.hide = false;
+      state.notepad.max = true;
+      state.explorer.max = false;
       return {
         ...state,
         notepad: {
           ...state.notepad,
-          hide: notepadHide,
+          hide: false,
           content: action.payload.content,
+        },
+      };
+
+    case "UPDATE_NOTEPAD_CONTENT":
+      return {
+        ...state,
+        notepad: {
+          ...state.notepad,
+          content: action.payload,
         },
       };
 
