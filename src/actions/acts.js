@@ -542,13 +542,15 @@ const combinedReducer = (state = combined, action) => {
       };
 
     case "CREATE_FILE":
-      const newFile = {
+      console.log("CREATE_FILE action:", action); // Log the action
+
+      let newFile = {
         id: Date.now(),
         type: "file",
         name: action.payload,
-        content: "",
+        content: "", // This is where the content is set to an empty string
         info: {
-          icon: "folder", // for now because we need an icon
+          icon: "folder",
         },
       };
 
@@ -561,14 +563,19 @@ const combinedReducer = (state = combined, action) => {
         action.payload,
         parentDirectory
       );
+      newFileItem.content = newFile.content;
+
+      console.log("New file item:", newFileItem);
 
       if (parentDirectory && parentDirectory.type === "folder") {
         parentDirectory.data.push(newFileItem);
 
-        return {
+        let newState = {
           ...state,
           files: [...state.files, newFileItem],
         };
+
+        return newState;
       } else {
         console.error("Cannot create file in a non-folder type");
         return state;
@@ -578,23 +585,30 @@ const combinedReducer = (state = combined, action) => {
       state.notepad.hide = false;
       state.notepad.max = true;
       state.explorer.max = false;
+      const { id } = action.payload;
+
+      const currentFile = state.files.find((file) => file.id === id);
+
+      const content = currentFile ? currentFile.content : "";
       return {
         ...state,
         notepad: {
           ...state.notepad,
           hide: false,
-          content: action.payload.content,
+          currentFileId: id,
+          content: content,
         },
       };
 
-    case "UPDATE_NOTEPAD_CONTENT":
+    case "UPDATE_NOTEPAD_CONTENT": {
+      const { id, content } = action.payload;
       return {
         ...state,
-        notepad: {
-          ...state.notepad,
-          content: action.payload,
-        },
+        files: state.files.map((file) =>
+          file.id === id ? { ...file, content } : file
+        ),
       };
+    }
 
     default:
       if (!navHist && tmp.data.cdir !== tmp.data.hist[tmp.data.hid]) {

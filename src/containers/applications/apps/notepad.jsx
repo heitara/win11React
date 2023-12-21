@@ -1,15 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { updateNotepadContent } from "../../../actions";
 import { ToolBar } from "../../../utils/general";
 
 import store from "../../../reducers";
 
 export const Notepad = () => {
   const wnapp = useSelector((state) => state.combined.application.notepad);
+  const dispatch = useDispatch();
 
-  const handleContentChange = (e) => {
-    store.dispatch({ type: "UPDATE_NOTEPAD_CONTENT", payload: e.target.value });
+  const files = useSelector((state) => state.combined.files);
+  const currentFileId = localStorage.getItem("currentFileId");
+
+  const currentFile = files.find((file) => file.id === currentFileId);
+
+  const [content, setContent] = useState(
+    currentFile ? currentFile.content : ""
+  );
+
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
+    dispatch({
+      type: "UPDATE_NOTEPAD_CONTENT",
+      payload: { id: currentFileId, content: event.target.value },
+    });
   };
+
+  useEffect(() => {
+    const currentFile = files.find((file) => file.id === currentFileId);
+    setContent(currentFile ? currentFile.content : "");
+  }, [currentFileId, files]);
 
   return (
     <div
@@ -40,6 +60,7 @@ export const Notepad = () => {
             <textarea
               className="noteText win11Scroll"
               id="textpad"
+              value={content}
               onChange={handleContentChange}
             />
           </div>

@@ -278,9 +278,24 @@ export const handleFileOpen = (id) => {
   if (item && item.type === "folder") {
     store.dispatch({ type: "FILEDIR", payload: item.id });
   } else if (item && item.type === "file") {
-    store.dispatch({ type: "OPEN_NOTEPAD", payload: { id: id } });
+    store.dispatch({
+      type: "OPEN_NOTEPAD",
+      payload: {
+        id: item.id,
+        content: item.content,
+      },
+    });
+
+    localStorage.setItem("currentFileId", item.id);
+
+    console.log(item);
   }
 };
+
+export const updateNotepadContent = (id, content) => ({
+  type: "UPDATE_NOTEPAD_CONTENT",
+  payload: { id, content },
+});
 
 export const createFolder = () => {
   store.dispatch({ type: "CREATE_FOLDER" });
