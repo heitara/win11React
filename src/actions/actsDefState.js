@@ -243,8 +243,8 @@ export const menuDefState = {
           },
           {
             name: "Text Document",
-            action: "NOTEPAD",
-            payload: "full",
+            action: "CREATE_FILE",
+            payload: "New.txt",
           },
         ],
       },

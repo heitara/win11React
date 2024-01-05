@@ -542,13 +542,13 @@ const combinedReducer = (state = combined, action) => {
       };
 
     case "CREATE_FILE":
-      console.log("CREATE_FILE action:", action); // Log the action
+      console.log("CREATE_FILE action:", action);
 
       let newFile = {
         id: Date.now(),
         type: "file",
         name: action.payload,
-        content: "", // This is where the content is set to an empty string
+        content: "",
         info: {
           icon: "folder",
         },
@@ -608,6 +608,23 @@ const combinedReducer = (state = combined, action) => {
           file.id === id ? { ...file, content } : file
         ),
       };
+    }
+
+    case "CAT_COMMAND": {
+      const filename = action.payload;
+      const file = state.files.find((file) => file.name === filename);
+
+      if (file) {
+        return {
+          ...state,
+          terminalOutput: file.content,
+        };
+      } else {
+        return {
+          ...state,
+          terminalOutput: `cat: ${filename}: No such file or directory`,
+        };
+      }
     }
 
     default:

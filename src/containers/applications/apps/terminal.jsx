@@ -212,6 +212,12 @@ export const WnTerminal = () => {
       } else {
         tmpStack.push("touch: missing file operand");
       }
+    } else if (type === "cat") {
+      if (arg.length) {
+        dispatch({ type: "CAT_COMMAND", payload: arg });
+      } else {
+        tmpStack.push("cat: missing file operand");
+      }
     } else if (type == "dir") {
       tmpStack.push(" Directory of " + pwd);
       tmpStack.push("");
