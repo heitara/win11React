@@ -15,7 +15,8 @@ export const WnTerminal = () => {
   const terminalOutput = useSelector((state) => state.combined.terminalOutput);
   const cdir = useSelector((state) => state.combined.data.cdir);
   const bin = useSelector((state) => state.combined.data.fdata);
-  const [shouldUpdateStackWithLs, setShouldUpdateStackWithLs] = useState(false);
+  // const [shouldUpdateStackWithLs, setShouldUpdateStackWithLs] = useState(false);
+  const forceUpdateKey = useSelector((state) => state.combined.forceUpdateKey);
 
   const dispatch = useDispatch();
 
@@ -28,11 +29,10 @@ export const WnTerminal = () => {
     if (terminalOutput) {
       setStack((currentStack) => [
         ...currentStack,
-        pwd + "> ls",
         ...terminalOutput.split("\n"),
       ]);
     }
-  }, [terminalOutput, pwd]);
+  }, [terminalOutput, pwd, forceUpdateKey]);
 
   const getPathFromCdir = (cdir, bin) => {
     return bin.getPath(cdir);

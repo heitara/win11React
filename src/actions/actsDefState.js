@@ -94,6 +94,7 @@ export const taskbarDefState = {
   search: true,
   widgets: true,
   audio: 3,
+  forceUpdateKey: 0,
 };
 
 //wallpaper.js:

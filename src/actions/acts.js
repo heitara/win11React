@@ -614,10 +614,13 @@ const combinedReducer = (state = combined, action) => {
       const filename = action.payload;
       const file = state.files.find((file) => file.name === filename);
 
+      console.log("File content:", file.content);
+
       if (file) {
         return {
           ...state,
           terminalOutput: file.content,
+          forceUpdateKey: state.forceUpdateKey + 1,
         };
       } else {
         return {
