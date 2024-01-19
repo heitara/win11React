@@ -46,12 +46,15 @@ export const DesktopApp = () => {
   });
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch({ type: "PUSH_APPS_TO_DESKTOP" });
+  }, [dispatch]);
+
   return (
     <div className="desktopCont">
       {!deskApps.sidePaneHide &&
         deskApps.apps.map((app, i) => {
           return (
-            // to allow it to be focusable (:focus)
             <div key={i} className="dskApp" tabIndex={0}>
               <Icon
                 click={app.action}

@@ -620,7 +620,7 @@ const combinedReducer = (state = combined, action) => {
         return {
           ...state,
           terminalOutput: file.content,
-          forceUpdateKey: state.forceUpdateKey + 1,
+          timeStamp: Date.now(),
         };
       } else {
         return {
@@ -628,6 +628,38 @@ const combinedReducer = (state = combined, action) => {
           terminalOutput: `cat: ${filename}: No such file or directory`,
         };
       }
+    }
+
+    case "PUSH_APPS_TO_DESKTOP": {
+      const desktopId = state.data.fdata.special["%desktop%"];
+      const desktopItem = state.data.fdata.getId(desktopId);
+
+      if (desktopItem && Array.isArray(desktopItem.data)) {
+        desktopItem.data = [];
+
+        state.apps.forEach((app) => {
+          const newItem = {
+            id:
+              app.id ||
+              `app-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+            name: app.name,
+            type: app.type || "app",
+            info: { ...app.info, icon: app.icon },
+          };
+
+          desktopItem.data.push(newItem);
+        });
+
+        state.data.fdata.setId(desktopId, desktopItem);
+      }
+
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          fdata: state.data.fdata,
+        },
+      };
     }
 
     default:
