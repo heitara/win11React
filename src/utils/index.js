@@ -22,7 +22,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Browser",
     "Get Started",
     "Task Manager",
-    "Mail",
+    "CodeEditor",
     "Settings",
     "Store",
     "Unescape",

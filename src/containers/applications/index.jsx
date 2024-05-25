@@ -18,6 +18,7 @@ export * from "./apps/store";
 export * from "./apps/taskmanager";
 export * from "./apps/terminal";
 export * from "./apps/whiteboard";
+export * from "./apps/codeeditor";
 
 export const ScreenPreview = () => {
   const tasks = useSelector((state) => state.combined);

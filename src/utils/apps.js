@@ -280,6 +280,12 @@ const apps = [
     type: "app",
   },
   {
+    name: "CodeEditor",
+    icon: "codeeditor",
+    type: "app",
+    action: "CODEEDITOR",
+  },
+  {
     name: "Github",
     icon: "github",
     type: "app",
