@@ -33,7 +33,7 @@ const combined = {
 
 const combinedReducer = (state = combined, action) => {
   console.log("action:", action);
-  console.log("Combined:", state);
+  // console.log("Combined:", state);
   var tmp = { ...state };
   var navHist = false;
   var tmpState = { ...state };

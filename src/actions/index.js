@@ -240,7 +240,8 @@ export const loadSettings = () => {
   sett = JSON.parse(sett);
 
   if (sett.person == null) {
-    sett = JSON.parse(JSON.stringify(store.getState().combined));
+    // sett = JSON.parse(JSON.stringify(store.getState().combined));
+    sett = store.getState().combined;
     if (
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
