@@ -547,7 +547,7 @@ export const WnTerminal = () => {
   };
 
   useEffect(() => {
-    getIPDetails();
+    // getIPDetails();
 
     if (wnapp.dir && wnapp.dir != pwd) {
       setPwd(wnapp.dir);
