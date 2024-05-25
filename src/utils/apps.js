@@ -286,6 +286,12 @@ const apps = [
     action: "CODEEDITOR",
   },
   {
+    name: "TinyEditor",
+    icon: "tinyeditor",
+    type: "app",
+    action: "TINYEDITOR",
+  },
+  {
     name: "Github",
     icon: "github",
     type: "app",
