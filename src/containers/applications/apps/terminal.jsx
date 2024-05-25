@@ -179,7 +179,19 @@ export const WnTerminal = () => {
       //     tmpStack.push(pwd);
       //   }
     } else if (type === "mkdir") {
-      dispatch({ type: "CREATE_FOLDER", payload: "New Folder" });
+      if(arg.length) {
+        let name = arg;
+        dispatch({ type: "CREATE_FOLDER", payload: name });
+      }
+    } else if (type === "rmdir") {
+      if(arg.length) {
+        let name = arg;
+        // TODO: extract the full path
+        dispatch({ type: "REMOVE_FOLDER", payload: name });
+      }
+    } else if (type === "fullscreen") {
+      dispatch({ type: "FULLSCREEN"});
+      
     } else if (type === "ls") {
       const currentDirId = cdir;
       const contents = getDirContents(currentDirId);

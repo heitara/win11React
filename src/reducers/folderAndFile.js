@@ -7,7 +7,7 @@ const folderAndFileReducer = (state = defState, action) => {
     case "CREATE_FOLDER":
       const newFolder = {
         id: Date.now(),
-        name: "New Folder",
+        name: action.payload,
         type: "folder",
       };
       return {

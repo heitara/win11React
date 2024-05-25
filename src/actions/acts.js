@@ -466,6 +466,47 @@ const combinedReducer = (state = combined, action) => {
         ...state,
         files: [...state.files, newFolder],
       };
+    
+      case "REMOVE_FOLDER":
+        {
+          const folderName = action.payload;
+        console.log("Remove folder with name = ", folderName);
+        const cdir = state.data.cdir; //id of the dir
+        const bin = state.data.fdata;
+        let parentItem = bin.getId(cdir);
+        let folderToRemove = null;
+          console.log("Parent item:", parentItem.data);
+        parentItem.data = parentItem.data.filter(item => {
+          let isDifferent = item.name !== folderName;
+          if(!isDifferent) {
+            folderToRemove = item;
+          }
+          return isDifferent
+        });
+        if (folderToRemove === null) {
+          console.error("Folder not found");
+          return state;
+        }
+        // parentItem.data.push(newFolderItem);
+        let filteredFolders = state.files.filter(file => file.id !== folderToRemove.id);
+        return {
+          ...state,
+          files: [...filteredFolders],
+        };
+      }
+    case "FULLSCREEN":
+      {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+          document.documentElement.msRequestFullscreen();
+        }
+        return state;
+    }
 
     case "SAVE_TEXT_DOC":
       const updatedFiles = state.files.map((file) => {
