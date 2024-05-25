@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from "../reducers";
-import { allApps, dfApps } from "../utils";
+import { dfApps } from "../utils";
 import { gene_name } from "../utils/apps";
 
 export const dispatchAction = (event) => {
@@ -38,9 +38,9 @@ export const changeIconSize = (size, menu) => {
     tmpMenu.menus.desk[0].opts[2].dot = true;
   }
 
-  refresh("", tmpMenu);
+  // refresh("", tmpMenu);
   store.dispatch({ type: "DESKSIZE", payload: isize });
-  store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
+  // store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
 };
 
 export const deskHide = (payload, menu) => {
@@ -58,10 +58,13 @@ export const changeSort = (sort, menu) => {
   tmpMenu.menus.desk[1].opts[2].dot = false;
   if (sort == "name") {
     tmpMenu.menus.desk[1].opts[0].dot = true;
+    menu.desktop.sort = "name";
   } else if (sort == "size") {
     tmpMenu.menus.desk[1].opts[1].dot = true;
+    menu.desktop.sort = "size";
   } else {
     tmpMenu.menus.desk[1].opts[2].dot = true;
+    menu.desktop.sort = "date modified";
   }
 
   refresh("", tmpMenu);
@@ -177,7 +180,7 @@ export const getTreeValue = (obj, path) => {
 };
 
 export const changeTheme = () => {
-  var thm = store.getState().setting.person.theme,
+  var thm = store.getState().combined.person.theme,
     thm = thm == "light" ? "dark" : "light";
   var icon = thm == "light" ? "sun" : "moon";
 
@@ -237,7 +240,7 @@ export const loadSettings = () => {
   sett = JSON.parse(sett);
 
   if (sett.person == null) {
-    sett = JSON.parse(JSON.stringify(store.getState().setting));
+    sett = JSON.parse(JSON.stringify(store.getState().combined));
     if (
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -254,16 +257,45 @@ export const loadSettings = () => {
   }
 };
 
-// mostly file explorer
+// // mostly file explorer
+// export const handleFileOpen = (id) => {
+//   // handle double click open
+//   const item = store.getState().combined.data.fdata.getId(id);
+//   console.log("Item", item);
+//   if (item != null) {
+//     if (item.type == "folder") {
+//       store.dispatch({ type: "FILEDIR", payload: item.id });
+//     }
+//   }
+// };
+
 export const handleFileOpen = (id) => {
-  // handle double click open
-  const item = store.getState().files.data.getId(id);
-  if (item != null) {
-    if (item.type == "folder") {
-      store.dispatch({ type: "FILEDIR", payload: item.id });
-    }
+  console.log("ID to open", id);
+
+  const item = store.getState().combined.data.fdata.getId(id);
+  console.log("Opening Item", item);
+
+  if (item && item.type === "folder") {
+    store.dispatch({ type: "FILEDIR", payload: item.id });
+  } else if (item && item.type === "file") {
+    store.dispatch({
+      type: "OPEN_NOTEPAD",
+      payload: {
+        id: item.id,
+        content: item.content,
+      },
+    });
+
+    localStorage.setItem("currentFileId", item.id);
+
+    console.log(item);
   }
 };
+
+export const updateNotepadContent = (id, content) => ({
+  type: "UPDATE_NOTEPAD_CONTENT",
+  payload: { id, content },
+});
 
 export const createFolder = () => {
   store.dispatch({ type: "CREATE_FOLDER" });
@@ -277,3 +309,11 @@ export const getFileContent = (id) => {
   const item = store.getState().files.data.find((file) => file.id === id);
   return item ? item.content : null;
 };
+
+export const listDir = () => {
+  store.dispatch({ type: "LIST_DIR" });
+};
+
+export const CLEAR_TERMINAL_OUTPUT = "CLEAR_TERMINAL_OUTPUT";
+
+export const UPDATE_TERMINAL_OUTPUT = "UPDATE_TERMINAL_OUTPUT";

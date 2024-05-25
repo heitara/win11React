@@ -6,7 +6,7 @@ const Battery = ({ pct, invert }) => {
   // var divtitle = "Battery status: " + level + "% " + (charging ? "available (plugged in)" : "remaining");
 
   const dispatch = useDispatch();
-  const btLevel = useSelector((state) => state.setting.system.power.battery);
+  const btLevel = useSelector((state) => state.combined.system.power.battery);
 
   const updateBatteryStatus = (bt) => {
     let level = bt.level * 100 || 100;

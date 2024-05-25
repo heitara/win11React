@@ -35,8 +35,8 @@ const emap = (v) => {
 export const MicroStore = () => {
   const apps = useSelector((state) => state.apps);
   const queryParams = new URLSearchParams(window.location.search);
-  const wnapp = useSelector((state) => state.apps.store);
-  const hide = useSelector((state) => state.apps.store.hide);
+  const wnapp = useSelector((state) => state.combined.application.store);
+  const hide = useSelector((state) => state.combined.application.store.hide);
   const [tab, setTab] = useState("sthome");
   const [page, setPage] = useState(0);
   const [opapp, setOpapp] = useState(storedata[0]);
@@ -458,10 +458,10 @@ const DetailPage = ({ app }) => {
 };
 
 const FrontPage = (props) => {
-  const ribbon = useSelector((state) => state.globals.ribbon);
-  const apprib = useSelector((state) => state.globals.apprib);
-  const gamerib = useSelector((state) => state.globals.gamerib);
-  const movrib = useSelector((state) => state.globals.movrib);
+  const ribbon = useSelector((state) => state.combined.ribbon);
+  const apprib = useSelector((state) => state.combined.apprib);
+  const gamerib = useSelector((state) => state.combined.gamerib);
+  const movrib = useSelector((state) => state.combined.movrib);
   const { t, i18n } = useTranslation();
 
   return (

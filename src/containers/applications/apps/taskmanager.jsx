@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { ToolBar } from "../../../utils/general";
-import { Icon } from "../../../utils/general";
+import { Icon, ToolBar } from "../../../utils/general";
 import "./assets/taskmanager.scss";
 
 import apps from "../../../utils/apps";
@@ -13,7 +12,7 @@ apps.map((e) => {
 });
 
 export const Taskmanager = () => {
-  const wnapp = useSelector((state) => state.apps.taskmanager);
+  const wnapp = useSelector((state) => state.combined.application.taskmanager);
 
   const [tab, setTab] = useState("Processes");
   const [nav, setNav] = useState("open");
@@ -99,7 +98,7 @@ export const Taskmanager = () => {
                                   {
                                     powerUsage[
                                       Math.floor(
-                                        Math.random() * powerUsage.length,
+                                        Math.random() * powerUsage.length
                                       )
                                     ]
                                   }

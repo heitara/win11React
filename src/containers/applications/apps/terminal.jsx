@@ -1,20 +1,77 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import i18next from "i18next";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import login from "../../../components/login";
 
 import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
 
 export const WnTerminal = () => {
-  const wnapp = useSelector((state) => state.apps.terminal);
+  const wnapp = useSelector((state) => state.combined.application.terminal);
   const [stack, setStack] = useState(["OS [Version 10.0.22000.51]", ""]);
   const [pwd, setPwd] = useState("C:\\Users\\Blue");
   const [lastCmd, setLsc] = useState(0);
   const [wntitle, setWntitle] = useState("Terminal");
+  const terminalOutput = useSelector((state) => state.combined.terminalOutput);
+  const cdir = useSelector((state) => state.combined.data.cdir);
+  const bin = useSelector((state) => state.combined.data.fdata);
+  // const [shouldUpdateStackWithLs, setShouldUpdateStackWithLs] = useState(false);
+  const forceUpdateKey = useSelector((state) => state.combined.forceUpdateKey);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const fullPath = getPathFromCdir(cdir, bin);
+    setPwd(fullPath);
+  }, [cdir, bin]);
+
+  useEffect(() => {
+    if (terminalOutput) {
+      setStack((currentStack) => [
+        ...currentStack,
+        ...terminalOutput.split("\n"),
+      ]);
+    }
+  }, [terminalOutput, pwd, forceUpdateKey]);
+
+  const getPathFromCdir = (cdir, bin) => {
+    return bin.getPath(cdir);
+  };
+
+  const resolvePathId = (currentPath, arg, bin) => {
+    const pathSegments = currentPath.split("\\").filter((segment) => segment);
+
+    if (arg === ".") {
+      return bin.parsePath(currentPath);
+    } else if (arg === "..") {
+      if (pathSegments.length > 0) {
+        pathSegments.pop();
+      }
+      return bin.parsePath(pathSegments.join("\\"));
+    }
+
+    let newPath;
+    if (arg.includes(":")) {
+      newPath = arg;
+    } else {
+      pathSegments.push(arg);
+      newPath = pathSegments.join("\\");
+    }
+
+    return bin.parsePath(newPath);
+  };
+
+  const getDirContents = (dirId) => {
+    const currentDirItem = bin.getId(dirId);
+    if (currentDirItem && currentDirItem.type === "folder") {
+      if (currentDirItem.data.length === 0) {
+        return "Directory is empty.";
+      }
+      return currentDirItem.data.map((item) => item.name).join("\n");
+    } else {
+      return "No contents found.";
+    }
+  };
   let IpDetails = [];
   const getIPDetails = async () => {
     try {
@@ -43,15 +100,18 @@ export const WnTerminal = () => {
 
     if (pwd != "C:\\") {
       for (var i = 0; i < curr.length; i++) {
-        // console.log(tdir);
-        tdir = tdir[curr[i]];
+        if (tdir && tdir[curr[i]]) {
+          tdir = tdir[curr[i]];
+        } else {
+          return {};
+        }
       }
     }
 
     if (isFile == "") {
-      return Object.keys(tdir);
+      return tdir ? Object.keys(tdir) : [];
     } else {
-      return tdir[isFile] || {};
+      return tdir && tdir[isFile] ? tdir[isFile] : {};
     }
   };
 
@@ -85,38 +145,78 @@ export const WnTerminal = () => {
           }
         }
       }
-    } else if (type == "cd") {
+      // } else if (type == "cd") {
+      //   if (arg.length) {
+      //     var errp = true;
+      //     var curr = pwd == "C:\\" ? [] : pwd.replace("C:\\", "").split("\\");
+
+      //     if (arg == ".") {
+      //       errp = false;
+      //     } else if (arg == "..") {
+      //       errp = false;
+      //       curr.pop();
+      //       setPwd("C:\\" + curr.join("\\"));
+      //     } else if (!arg.includes(".")) {
+      //       var tdir = dirFolders();
+
+      //       for (var i = 0; i < tdir.length; i++) {
+      //         if (arg.toLowerCase() == tdir[i].toLowerCase() && errp) {
+      //           curr.push(tdir[i]);
+      //           errp = false;
+      //           setPwd("C:\\" + curr.join("\\"));
+      //           break;
+      //         }
+      //       }
+      //     } else {
+      //       errp = false;
+      //       tmpStack.push("The directory name is invalid.");
+      //     }
+
+      //     if (errp) {
+      //       tmpStack.push("The system cannot find the path specified.");
+      //     }
+      //   } else {
+      //     tmpStack.push(pwd);
+      //   }
+    } else if (type === "mkdir") {
+      dispatch({ type: "CREATE_FOLDER", payload: "New Folder" });
+    } else if (type === "ls") {
+      const currentDirId = cdir;
+      const contents = getDirContents(currentDirId);
+      setStack((currentStack) => [
+        ...currentStack,
+        pwd + "> ls",
+        ...contents.split("\n"),
+      ]);
+
+      dispatch({ type: "CLEAR_TERMINAL_OUTPUT" });
+      setTimeout(() => {
+        dispatch({ type: "LIST_DIR" });
+      }, 10);
+    } else if (type === "cd") {
       if (arg.length) {
-        var errp = true;
-        var curr = pwd == "C:\\" ? [] : pwd.replace("C:\\", "").split("\\");
-
-        if (arg == ".") {
-          errp = false;
-        } else if (arg == "..") {
-          errp = false;
-          curr.pop();
-          setPwd("C:\\" + curr.join("\\"));
-        } else if (!arg.includes(".")) {
-          var tdir = dirFolders();
-
-          for (var i = 0; i < tdir.length; i++) {
-            if (arg.toLowerCase() == tdir[i].toLowerCase() && errp) {
-              curr.push(tdir[i]);
-              errp = false;
-              setPwd("C:\\" + curr.join("\\"));
-              break;
-            }
-          }
+        const newPathId = resolvePathId(pwd, arg, bin);
+        if (newPathId) {
+          dispatch({ type: "CHANGE_DIR", payload: newPathId });
+          const fullPath = getPathFromCdir(newPathId, bin);
+          setPwd(fullPath);
         } else {
-          errp = false;
-          tmpStack.push("The directory name is invalid.");
-        }
-
-        if (errp) {
           tmpStack.push("The system cannot find the path specified.");
         }
       } else {
-        tmpStack.push(pwd);
+        tmpStack.push("Current directory: " + pwd);
+      }
+    } else if (type === "touch") {
+      if (arg.length) {
+        dispatch({ type: "CREATE_FILE", payload: arg });
+      } else {
+        tmpStack.push("touch: missing file operand");
+      }
+    } else if (type === "cat") {
+      if (arg.length) {
+        dispatch({ type: "CAT_COMMAND", payload: arg });
+      } else {
+        tmpStack.push("cat: missing file operand");
       }
     } else if (type == "dir") {
       tmpStack.push(" Directory of " + pwd);
@@ -154,12 +254,12 @@ export const WnTerminal = () => {
         cmdcont.style.color = color;
       } else {
         tmpStack.push(
-          "Set the color of the background and the text for the console.",
+          "Set the color of the background and the text for the console."
         );
         tmpStack.push("COLOR [arg]");
         tmpStack.push("arg\t\tSpecifies the color for the console output");
         tmpStack.push(
-          "The color attribute is a combination of the following values:",
+          "The color attribute is a combination of the following values:"
         );
         tmpStack.push("0\t\tBlack");
         tmpStack.push("1\t\tBlue");
@@ -217,7 +317,7 @@ export const WnTerminal = () => {
             })
             .replaceAll(":", ".") +
           "." +
-          Math.floor(Math.random() * 100),
+          Math.floor(Math.random() * 100)
       );
     } else if (type == "exit") {
       tmpStack = ["OS [Version 10.0.22000.51]", ""];
@@ -290,7 +390,7 @@ export const WnTerminal = () => {
       tmpStack.push("Postal: " + IP.postal);
     } else {
       tmpStack.push(
-        `'${type}' is not recognized as an internal or external command,`,
+        `'${type}' is not recognized as an internal or external command,`
       );
       tmpStack.push("operable program or batch file.");
       tmpStack.push("");

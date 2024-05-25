@@ -75,7 +75,7 @@ export const LockScreen = (props) => {
   const [forgot, setForget] = useState(false);
   const dispatch = useDispatch();
 
-  const userName = useSelector((state) => state.setting.person.name);
+  const userName = useSelector((state) => state.combined.person.name);
 
   const action = (e) => {
     var act = e.target.dataset.action,

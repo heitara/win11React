@@ -1,4 +1,16 @@
-import { desktopApps, pinnedApps, recentApps, taskApps } from "../utils";
+import {
+  allApps,
+  desktopApps,
+  pinnedApps,
+  recentApps,
+  taskApps,
+} from "../utils";
+
+import { Bin } from "../utils/bin";
+import fdata from "./dir.json";
+
+import * as history from "./history.json";
+import * as news from "./news.json";
 
 //startmenu.js:
 
@@ -82,6 +94,7 @@ export const taskbarDefState = {
   search: true,
   widgets: true,
   audio: 3,
+  forceUpdateKey: 0,
 };
 
 //wallpaper.js:
@@ -124,8 +137,8 @@ export const wallpaperDefState = {
 
 //desktop.js:
 export const deskDefState = {
-  dskApps: desktopApps,
-  dskHide: false,
+  apps: desktopApps,
+  hide: false,
   size: 1,
   sort: "none",
   abOpen: false,
@@ -133,7 +146,7 @@ export const deskDefState = {
 
 //menu.js:
 export const menuDefState = {
-  menuHide: true, //changed
+  menuHide: true,
   top: 80,
   left: 360,
   opts: "desk",
@@ -147,7 +160,7 @@ export const menuDefState = {
     task: {
       width: "220px",
       secwid: "120px",
-      ispace: false, // show the space for icons in menu
+      ispace: false,
     },
     app: {
       width: "310px",
@@ -227,12 +240,12 @@ export const menuDefState = {
           {
             name: "Folder",
             action: "CREATE_FOLDER",
-            payload: {},
+            payload: "New Folder",
           },
           {
             name: "Text Document",
-            action: "NOTEPAD",
-            payload: "full",
+            action: "CREATE_FILE",
+            payload: "New.txt",
           },
         ],
       },
@@ -378,4 +391,412 @@ export const menuDefState = {
       },
     ],
   },
+};
+
+//widpane:
+var hisTemp = history.default;
+
+var date = new Date(),
+  event = hisTemp[Math.floor(Math.random() * hisTemp.length)];
+date.setYear(event.year);
+
+var newsList = [];
+for (var i = 0; i < news.default.articles.length; i++) {
+  var item = {
+    ...news.default.articles[i],
+  };
+  item.title = item.title
+    .split("-")
+    .reverse()
+    .splice(1)
+    .reverse()
+    .join("-")
+    .trim();
+  newsList.push(item);
+}
+
+var abbr = ["sn", "sl", "h", "t", "hr", "lr", "s", "hc", "lc", "c"],
+  wstates = [
+    "Snow",
+    "Sleet",
+    "Hail",
+    "Thunderstorm",
+    "Heavy Rain",
+    "Light Rain",
+    "Showers",
+    "Heavy Cloud",
+    "Light Cloud",
+    "Clear",
+  ];
+
+var rem = null;
+
+const getRandom = (x = 10, rm = 0) => {
+  if (rem != null) {
+    var tmp = rem;
+    rem = null;
+    return tmp;
+  } else if (rm) {
+    rem = Math.floor(Math.random() * x);
+    return rem;
+  }
+
+  return Math.floor(Math.random() * x);
+};
+
+export const widpaneDefState = {
+  widpaneData: {
+    weather: {
+      city: "New Delhi",
+      country: "India",
+      wstate: wstates[getRandom(10, 1)],
+      icon: abbr[getRandom()],
+      temp: 30 + getRandom(20),
+      rain: 10 + getRandom(80),
+      wind: 4 + getRandom(5),
+      days: [0, 1, 2, 3].map((i) => {
+        return {
+          day: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][
+            (new Date().getDay() + i) % 7
+          ],
+          icon: abbr[getRandom(10)],
+          min: 30 + getRandom(10),
+          max: 40 + getRandom(10),
+        };
+      }),
+    },
+    stock: [
+      [
+        Number(
+          parseFloat(2300 + Math.random() * 200).toFixed(2)
+        ).toLocaleString(),
+        parseFloat(Math.random() * 2).toFixed(2),
+        Math.round(Math.random()),
+      ],
+      [
+        Number(
+          parseFloat(600 + Math.random() * 200).toFixed(2)
+        ).toLocaleString(),
+        parseFloat(Math.random() * 2).toFixed(2),
+        Math.round(Math.random()),
+      ],
+    ],
+    date: date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }),
+    event: event,
+    news: newsList,
+  },
+  widpaneHide: true,
+};
+
+//files:
+export const filesDefState = {
+  cdir: "%user%",
+  hist: [],
+  hid: 0,
+  view: 1,
+};
+
+filesDefState.hist.push(filesDefState.cdir);
+filesDefState.fdata = new Bin();
+filesDefState.fdata.parse(fdata);
+
+//settings:
+export const settingsDefState = {
+  system: {
+    power: {
+      saver: {
+        state: false,
+      },
+      battery: 100,
+    },
+    display: {
+      brightness: 100,
+      nightlight: {
+        state: false,
+      },
+      connect: false,
+    },
+  },
+  person: {
+    name: "Blue Edge",
+    theme: "light",
+    color: "blue",
+  },
+  devices: {
+    bluetooth: false,
+  },
+  network: {
+    wifi: {
+      state: true,
+    },
+    airplane: false,
+  },
+  privacy: {
+    location: {
+      state: false,
+    },
+  },
+};
+
+document.body.dataset.theme = settingsDefState.person.theme;
+
+export const changeVal = (obj, path, val = "togg") => {
+  var tmp = obj;
+  path = path.split(".");
+  for (var i = 0; i < path.length - 1; i++) {
+    tmp = tmp[path[i]];
+  }
+
+  if (val == "togg") {
+    tmp[path[path.length - 1]] = !tmp[path[path.length - 1]];
+  } else {
+    tmp[path[path.length - 1]] = val;
+  }
+
+  return obj;
+};
+
+//globals:
+
+export const globalsDefState = {
+  lays: [
+    [
+      {
+        dim: {
+          width: "50%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
+      },
+      {
+        dim: {
+          width: "50%",
+          height: "100%",
+          top: 0,
+          left: "50%",
+        },
+        br: 15,
+      },
+    ],
+    [
+      {
+        dim: {
+          width: "66%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
+      },
+      {
+        dim: {
+          width: "34%",
+          height: "100%",
+          top: 0,
+          left: "66%",
+        },
+        br: 15,
+      },
+    ],
+    [
+      {
+        dim: {
+          width: "33%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
+      },
+      {
+        dim: {
+          width: "34%",
+          height: "100%",
+          top: 0,
+          left: "33%",
+        },
+        br: 1,
+      },
+      {
+        dim: {
+          width: "33%",
+          height: "100%",
+          top: 0,
+          left: "67%",
+        },
+        br: 15,
+      },
+    ],
+    [
+      {
+        dim: {
+          width: "50%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
+      },
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: 0,
+          left: "50%",
+        },
+        br: 3,
+      },
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: "50%",
+          left: "50%",
+        },
+        br: 5,
+      },
+    ],
+    [
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: 0,
+          left: 0,
+        },
+        br: 2,
+      },
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: 0,
+          left: "50%",
+        },
+        br: 3,
+      },
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: "50%",
+          left: 0,
+        },
+        br: 7,
+      },
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: "50%",
+          left: "50%",
+        },
+        br: 5,
+      },
+    ],
+    [
+      {
+        dim: {
+          width: "25%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
+      },
+      {
+        dim: {
+          width: "50%",
+          height: "100%",
+          top: 0,
+          left: "25%",
+        },
+        br: 1,
+      },
+      {
+        dim: {
+          width: "25%",
+          height: "100%",
+          top: 0,
+          left: "75%",
+        },
+        br: 15,
+      },
+    ],
+  ],
+  ribbon: [
+    "luca",
+    "unescape",
+    "essential apps",
+    "xbox gamepass",
+    "spotify",
+    "social media",
+    "security",
+    "utility apps",
+    "forza horizon",
+    "kids apps",
+  ],
+  apprib: [
+    "netflix",
+    "whatsApp",
+    "telegram",
+    "facebook",
+    "amazon prime",
+    "office",
+    "lightroom",
+  ],
+  gamerib: [
+    "call of duty",
+    "cyberpunk 2077",
+    "minecraft",
+    "battle field v",
+    "far cry 5",
+    "hitman 3",
+    "residental evil",
+  ],
+  movrib: [
+    "antman",
+    "godzilla vs kong",
+    "tom and jerry",
+    "wrath of man",
+    "john wick",
+    "wonder woman 1984",
+    "nobody",
+  ],
+};
+
+//apps:
+var dev = "";
+if (import.meta.env.MODE == "development") {
+  dev = ""; // set the name (lowercase) of the app you are developing so that it will be opened on refresh
+}
+
+export const appsDefState = {};
+for (let i = 0; i < allApps.length; i++) {
+  appsDefState[allApps[i].icon] = allApps[i];
+  appsDefState[allApps[i].icon].size = "full";
+  appsDefState[allApps[i].icon].hide = true;
+  appsDefState[allApps[i].icon].max = null;
+  appsDefState[allApps[i].icon].z = 0;
+
+  if (allApps[i].icon == dev) {
+    appsDefState[allApps[i].icon].size = "mini";
+    appsDefState[allApps[i].icon].hide = false;
+    appsDefState[allApps[i].icon].max = true;
+    appsDefState[allApps[i].icon].z = 1;
+  }
+}
+
+appsDefState.hz = 2;
+
+//FolderAndFile:
+
+export const fileAndFolderDefState = {
+  files: [],
 };

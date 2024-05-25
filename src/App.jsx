@@ -68,7 +68,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 }
 
 function App() {
-  const apps = useSelector((state) => state.apps);
+  const apps = useSelector((state) => state.combined);
   const wall = useSelector((state) => state.combined);
   const dispatch = useDispatch();
 
@@ -149,7 +149,7 @@ function App() {
               var WinApp = Applications[key];
               return <WinApp key={idx} />;
             })}
-            {Object.keys(apps)
+            {Object.keys(apps.application)
               .filter((x) => x != "hz")
               .map((key) => apps[key])
               .map((app, i) => {

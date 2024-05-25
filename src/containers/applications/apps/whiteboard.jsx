@@ -6,7 +6,7 @@ import CanvasDraw from "@win11react/react-canvas-draw";
 import { Mark } from "./assets";
 
 export const WhiteBoard = () => {
-  const wnapp = useSelector((state) => state.apps.board);
+  const wnapp = useSelector((state) => state.combined.application.board);
   const [color, setColor] = useState("#222222");
   const [radii, setRadii] = useState(4);
   const [eraze, setErz] = useState(false);

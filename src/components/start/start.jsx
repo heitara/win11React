@@ -28,10 +28,10 @@ export const StartMenu = () => {
     }
 
     var allApps = [],
-      tmpApps = Object.keys(state.apps)
+      tmpApps = Object.keys(state.combined.application)
         .filter((x) => x != "hz")
         .map((key) => {
-          return state.apps[key];
+          return state.combined.application[key];
         });
 
     tmpApps.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
@@ -105,7 +105,7 @@ export const StartMenu = () => {
     }
   }, [query]);
 
-  const userName = useSelector((state) => state.setting.person.name);
+  const userName = useSelector((state) => state.combined.person.name);
 
   return (
     <div

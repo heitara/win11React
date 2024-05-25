@@ -7,8 +7,8 @@ import "./assets/settings.scss";
 import data from "./assets/settingsData.json";
 
 export const Settings = () => {
-  const wnapp = useSelector((state) => state.apps.settings);
-  const theme = useSelector((state) => state.setting.person.theme);
+  const wnapp = useSelector((state) => state.combined.application.settings);
+  const theme = useSelector((state) => state.combined.person.theme);
   const dispatch = useDispatch();
 
   const wall = useSelector((state) => state.combined);
@@ -42,7 +42,7 @@ export const Settings = () => {
     });
   };
 
-  const userName = useSelector((state) => state.setting.person.name);
+  const userName = useSelector((state) => state.combined.person.name);
 
   return (
     <div

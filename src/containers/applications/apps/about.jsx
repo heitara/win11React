@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 export const AboutWin = () => {
-  const { abOpen } = useSelector((state) => state.combined);
+  const { abOpen } = useSelector((state) => state.combined.desktop);
   const { locked, booted } = useSelector((state) => state.combined);
   const [open, setOpen] = useState(
     true && import.meta.env.MODE != "development"
