@@ -11,7 +11,7 @@ export const Settings = () => {
   const theme = useSelector((state) => state.setting.person.theme);
   const dispatch = useDispatch();
 
-  const wall = useSelector((state) => state.wallpaper);
+  const wall = useSelector((state) => state.combined);
 
   const [page, setPage] = useState("System"); // default System
   const [nav, setNav] = useState("");
@@ -326,7 +326,7 @@ export const Settings = () => {
                           );
                         default:
                           return console.log(
-                            `error - type ${e.type} not found`,
+                            `error - type ${e.type} not found`
                           );
                       }
                     })}

@@ -1,18 +1,19 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
 import "./menu.scss";
 
 import * as Actions from "../../actions";
 
 export const ActMenu = () => {
-  const menu = useSelector((state) => state.menus);
-  const menudata = menu.data[menu.opts];
+  const menu = useSelector((state) => state.combined);
+  const menudata = menu.newData[menu.opts];
+  // console.log("Menu: ", menu);
   const { abpos, isLeft } = useSelector((state) => {
-    var acount = state.menus.menus[state.menus.opts].length;
+    var acount = state.combined.menus[state.combined.opts].length;
     var tmpos = {
-        top: state.menus.top,
-        left: state.menus.left,
+        top: state.combined.top,
+        left: state.combined.left,
       },
       tmpleft = false;
 
@@ -120,7 +121,7 @@ export const ActMenu = () => {
                 {menuobj(opt.opts)}
               </div>
             ) : null}
-          </div>,
+          </div>
         );
       }
     });
@@ -137,7 +138,7 @@ export const ActMenu = () => {
         "--prefix": "MENU",
         width: menudata.width,
       }}
-      data-hide={menu.hide}
+      data-hide={menu.menuHide}
       data-left={isLeft}
     >
       {menuobj(menu.menus[menu.opts])}

@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon, LazyComponent } from "../../utils/general";
 import "./widget.scss";
 
 export const WidPane = () => {
   const dispatch = useDispatch();
-  const widget = useSelector((state) => state.widpane);
+  const widget = useSelector((state) => state.combined);
   const theme = useSelector((state) => state.setting.person.theme);
   const getRandom = (x = 0) => {
     if (theme == "light")
@@ -17,10 +17,10 @@ export const WidPane = () => {
   return (
     <div
       className="widPaneCont"
-      data-hide={widget.hide}
+      data-hide={widget.widpaneHide}
       style={{ "--prefix": "WIDG" }}
     >
-      <LazyComponent show={!widget.hide}>
+      <LazyComponent show={!widget.widpaneHide}>
         <div className="WidPane win11Scroll">
           <div className="widtop">
             <Icon fafa="faEllipsisH" width={12} />

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 
 export const AboutWin = () => {
-  const { abOpen } = useSelector((state) => state.desktop);
-  const { locked, booted } = useSelector((state) => state.wallpaper);
+  const { abOpen } = useSelector((state) => state.combined);
+  const { locked, booted } = useSelector((state) => state.combined);
   const [open, setOpen] = useState(
-    true && import.meta.env.MODE != "development",
+    true && import.meta.env.MODE != "development"
   );
   const [timer, setTimer] = useState(
-    localStorage.getItem("closeAbout") == "true" ? 0 : 5,
+    localStorage.getItem("closeAbout") == "true" ? 0 : 5
   );
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();

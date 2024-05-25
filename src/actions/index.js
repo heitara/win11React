@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from "../reducers";
-import { dfApps } from "../utils";
+import { allApps, dfApps } from "../utils";
 import { gene_name } from "../utils/apps";
 
 export const dispatchAction = (event) => {
@@ -100,7 +100,7 @@ export const performApp = (act, menu) => {
       var app = Object.keys(apps).filter(
         (x) =>
           apps[x].action == data.type ||
-          (apps[x].payload == data.payload && apps[x].payload != null),
+          (apps[x].payload == data.payload && apps[x].payload != null)
       );
 
       app = apps[app];
@@ -263,4 +263,17 @@ export const handleFileOpen = (id) => {
       store.dispatch({ type: "FILEDIR", payload: item.id });
     }
   }
+};
+
+export const createFolder = () => {
+  store.dispatch({ type: "CREATE_FOLDER" });
+};
+
+export const createTextDoc = () => {
+  store.dispatch({ type: "CREATE_TEXT_DOC" });
+};
+
+export const getFileContent = (id) => {
+  const item = store.getState().files.data.find((file) => file.id === id);
+  return item ? item.content : null;
 };
