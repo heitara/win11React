@@ -55,7 +55,7 @@ export const TinyEditor = () => {
       />
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
-
+        <Editor apiKey='' />
         </div>
       </div>
     </div>

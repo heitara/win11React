@@ -705,13 +705,19 @@ const combinedReducer = (state = combined, action) => {
     case "BOOTSTRAP_SCRIPT": {
       console.log("Execute bootstrap script!");
 
-      const readmeFile = `
-      
+      const readmeContent = 
+`Please, write a short function that sums two numbers, which are passed as arguments.
+The function should be called sumAandB().
       `;
+
+      let tinyConfig = { content: readmeContent };
 
       const jsSourceCode = 
       `// some comment
 console.log("Hello from the internal code editor!");
+function sum(a, b) {
+  // TODO: add your implementation here
+}
       `;
       let config = { content: jsSourceCode };
       return {
@@ -722,7 +728,11 @@ console.log("Hello from the internal code editor!");
             codeeditor: {
               ...state.application.codeeditor,
               ...config,
-            }
+            },
+            tinyeditor: {
+              ...state.application.tinyeditor,
+              ...tinyConfig,
+            },
           }
       };
     // return state;
