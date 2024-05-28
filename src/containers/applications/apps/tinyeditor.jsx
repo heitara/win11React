@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Image, ToolBar } from "../../../utils/general";
-
-import CanvasDraw from "@win11react/react-canvas-draw";
-import { Mark } from "./assets";
+import { ToolBar } from "../../../utils/general";
+import { Editor } from "@tinymce/tinymce-react";
 
 export const TinyEditor = () => {
   const wnapp = useSelector((state) => state.combined.application.tinyeditor);
@@ -21,6 +19,19 @@ export const TinyEditor = () => {
     "erazer",
     "reset",
   ]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.target.closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root") !== null) {
+        e.stopImmediatePropagation();
+      }
+    };
+    document.addEventListener("focusin", handler);
+    return () => document.removeEventListener("focusin", handler);
+  }, []);
+
+  // TODO: add markdown support with the following plugin
+  // https://github.com/prathamVaidya/supercode-tinymce-plugin
 
   return (
     <div

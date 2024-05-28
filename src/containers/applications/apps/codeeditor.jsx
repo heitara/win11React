@@ -5,6 +5,7 @@ import Editor, { useMonaco } from '@monaco-editor/react';
 
 export const CodeEditor = () => {
   const wnapp = useSelector((state) => state.combined.application.codeeditor);
+  const content = useSelector((state) => state.combined.application.codeeditor.content) ?? "";
   const [color, setColor] = useState("#222222");
   const [radii, setRadii] = useState(4);
   const [eraze, setErz] = useState(false);
@@ -53,7 +54,7 @@ export const CodeEditor = () => {
       />
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
-         <Editor height="90vh" defaultValue="// some comment" defaultLanguage="javascript" />;
+         <Editor height="90vh" defaultValue={content} defaultLanguage="javascript" />;
         </div>
       </div>
     </div>

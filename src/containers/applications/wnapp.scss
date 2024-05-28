@@ -149,6 +149,9 @@ body[data-theme="dark"] .calcApp {
 
 .tinyEditor {
   background: var(--comp-txt);
+  .tox-tinymce{
+    height: 100% !important;
+  }  
 }
 
 .spotify {

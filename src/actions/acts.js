@@ -674,7 +674,6 @@ const combinedReducer = (state = combined, action) => {
     case "PUSH_APPS_TO_DESKTOP": {
       const desktopId = state.data.fdata.special["%desktop%"];
       const desktopItem = state.data.fdata.getId(desktopId);
-
       if (desktopItem && Array.isArray(desktopItem.data)) {
         desktopItem.data = [];
 
@@ -701,6 +700,32 @@ const combinedReducer = (state = combined, action) => {
           fdata: state.data.fdata,
         },
       };
+    }
+
+    case "BOOTSTRAP_SCRIPT": {
+      console.log("Execute bootstrap script!");
+
+      const readmeFile = `
+      
+      `;
+
+      const jsSourceCode = 
+      `// some comment
+console.log("Hello from the internal code editor!");
+      `;
+      let config = { content: jsSourceCode };
+      return {
+        ...state,
+    
+          application: {
+            ...state.application,
+            codeeditor: {
+              ...state.application.codeeditor,
+              ...config,
+            }
+          }
+      };
+    // return state;
     }
 
     default:

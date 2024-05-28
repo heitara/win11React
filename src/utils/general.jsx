@@ -25,9 +25,7 @@ String.prototype.count = function (c) {
 
 export const Icon = (props) => {
   const dispatch = useDispatch();
-  console.log("Icon: ", props);
   var src = `img/icon/${props.ui != null ? "ui/" : ""}${props.src}.png`;
-  console.log("Icon: ", src);
   if (props.ext != null || (props.src && props.src.includes("http"))) {
     src = props.src;
   }

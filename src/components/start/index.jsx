@@ -48,7 +48,36 @@ export const DesktopApp = () => {
 
   useEffect(() => {
     dispatch({ type: "PUSH_APPS_TO_DESKTOP" });
+    dispatch({ type: "BOOTSTRAP_SCRIPT" });
+    let action = {
+      type: "TINYEDITOR",
+      payload: "resize",
+      dim: {
+        width: "50%",
+        height: "100%",
+        top: 0,
+        left: "0%",
+      },
+    };
+    dispatch(action);
+
+    //auto open
+    action = {
+      type: "CODEEDITOR",
+      payload: "resize",
+      dim: {
+        width: "50%",
+        height: "100%",
+        top: 0,
+        left: "50%",
+      },
+    };
+    dispatch(action);
+
+
   }, [dispatch]);
+
+  console.log("Desktop: ", deskApps.apps);
 
   return (
     <div className="desktopCont">

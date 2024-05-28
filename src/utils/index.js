@@ -14,7 +14,7 @@ var { taskbar, desktop, pinned, recent } = {
     JSON.parse(localStorage.getItem("desktop"))) || [
     "Recycle Bin",
     "File Explorer",
-    // "Store",
+    "Notepad",
     "Browser",
     "CodeEditor",
     "TinyEditor",
@@ -81,7 +81,7 @@ export const recentApps = icons
 export const allApps = icons.filter((app) => {
   return app.type === "app";
 });
-
+// converted and exported apps (All items are coming from apps.js array)
 export const dfApps = {
   taskbar,
   desktop,
