@@ -31,6 +31,11 @@ export const TinyEditor = () => {
     return () => document.removeEventListener("focusin", handler);
   }, []);
 
+  let api = import.meta.env.VITE_APP_TINY_API;
+  if (api === undefined || api === "") {
+    console.error("Tiny API key not found, please add it to .env file as VITE_APP_TINY_API=<your_key>");
+  }
+
   // TODO: add markdown support with the following plugin
   // https://github.com/prathamVaidya/supercode-tinymce-plugin
 
@@ -56,7 +61,7 @@ export const TinyEditor = () => {
       />
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
-        <Editor apiKey='' initialValue={content} 
+        <Editor apiKey={api} initialValue={content} 
         init={{
           branding: false,
           resize: false
