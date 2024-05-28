@@ -591,7 +591,7 @@ const combinedReducer = (state = combined, action) => {
         name: action.payload,
         content: "",
         info: {
-          icon: "folder",
+          icon: "docs",
         },
       };
 
@@ -706,8 +706,8 @@ const combinedReducer = (state = combined, action) => {
       console.log("Execute bootstrap script!");
 
       const readmeContent = 
-`Please, write a short function that sums two numbers, which are passed as arguments.
-The function should be called sumAandB().
+`Please, write a short function that sums two numbers, which are passed as arguments.<br/>
+The function should be called <b>sumAandB()</b>.
       `;
 
       let tinyConfig = { content: readmeContent };

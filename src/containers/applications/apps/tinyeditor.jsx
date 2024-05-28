@@ -5,6 +5,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 export const TinyEditor = () => {
   const wnapp = useSelector((state) => state.combined.application.tinyeditor);
+  const content = useSelector((state) => state.combined.application.tinyeditor.content) ?? "";
   const [color, setColor] = useState("#222222");
   const [radii, setRadii] = useState(4);
   const [eraze, setErz] = useState(false);
@@ -39,7 +40,7 @@ export const TinyEditor = () => {
       data-size={wnapp.size}
       data-max={wnapp.max}
       style={{
-        ...(wnapp.size == "cstm" ? wnapp.dim : null),
+        ...(wnapp.size === "cstm" ? wnapp.dim : null),
         zIndex: wnapp.z,
       }}
       data-hide={wnapp.hide}
@@ -55,7 +56,11 @@ export const TinyEditor = () => {
       />
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
-        <Editor apiKey='' />
+        <Editor apiKey='' initialValue={content} 
+        init={{
+          branding: false,
+          resize: false
+        }} />
         </div>
       </div>
     </div>
