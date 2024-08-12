@@ -384,6 +384,9 @@ export const WnTerminal = () => {
         "VER            Displays the Windows version.",
         "PYTHON         EXECUTE PYTHON CODE.",
         "EVAL           RUNS JavaScript statements.",
+        "TOUCH          CREATES a file.",
+        "MKDIR          CREATES a folder.",
+        "FULLSCREEN     Starts a fullscreen mode of the simulation.",
       ];
 
       for (var i = 0; i < helpArr.length; i++) {
