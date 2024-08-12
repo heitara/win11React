@@ -292,6 +292,12 @@ const apps = [
     action: "TINYEDITOR",
   },
   {
+    name: "Drawing",
+    icon: "drawing",
+    type: "app",
+    action: "DRAWING",
+  },
+  {
     name: "Github",
     icon: "github",
     type: "app",

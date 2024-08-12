@@ -19,6 +19,7 @@ var { taskbar, desktop, pinned, recent } = {
     "CodeEditor",
     "TinyEditor",
     "Terminal",
+    "Drawing",
   ],
   pinned: (localStorage.getItem("pinned") &&
     JSON.parse(localStorage.getItem("pinned"))) || [
@@ -27,6 +28,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Task Manager",
     "CodeEditor",
     "TinyEditor",
+    "Drawing",
     "Settings",
     "Store",
     "Unescape",

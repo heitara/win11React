@@ -711,6 +711,12 @@ The function should be called <b>sumAandB()</b>.
       `;
 
       let tinyConfig = { content: readmeContent };
+      const basicDrawingSetup = 
+`Please, write a short function that sums two numbers, which are passed as arguments.<br/>
+The function should be called <b>sumAandB()</b>.
+      `;
+
+      let drawing = { content: basicDrawingSetup };
 
       const jsSourceCode = 
       `// some comment
@@ -732,6 +738,10 @@ function sum(a, b) {
             tinyeditor: {
               ...state.application.tinyeditor,
               ...tinyConfig,
+            },
+            drawing: {
+              ...state.application.drawing,
+              ...drawing,
             },
           }
       };

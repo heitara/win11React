@@ -20,6 +20,7 @@ export * from "./apps/terminal";
 export * from "./apps/whiteboard";
 export * from "./apps/codeeditor";
 export * from "./apps/tinyeditor";
+export * from "./apps/drawing";
 
 export const ScreenPreview = () => {
   const tasks = useSelector((state) => state.combined);
