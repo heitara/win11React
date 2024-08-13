@@ -717,6 +717,8 @@ The function should be called <b>sumAandB()</b>.
       `;
 
       let drawing = { content: basicDrawingSetup };
+      
+      let spreadsheet = { content: {} };
 
       const jsSourceCode = 
       `// some comment
@@ -742,6 +744,10 @@ function sum(a, b) {
             drawing: {
               ...state.application.drawing,
               ...drawing,
+            },
+            spreadsheet: {
+              ...state.application.spreadsheet,
+              ...spreadsheet,
             },
           }
       };

@@ -298,6 +298,12 @@ const apps = [
     action: "DRAWING",
   },
   {
+    name: "Spreadsheet",
+    icon: "spreadsheet",
+    type: "app",
+    action: "SPREADSHEET",
+  },
+  {
     name: "Github",
     icon: "github",
     type: "app",

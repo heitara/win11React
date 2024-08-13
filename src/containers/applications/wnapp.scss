@@ -158,6 +158,11 @@ body[data-theme="dark"] .calcApp {
   background: var(--comp-txt);
 }
 
+.spreadsheet {
+  background: var(--comp-txt);
+  // overflow: hidden;
+}
+
 .spotify {
   background: rgb(24, 24, 24);
 }
